@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 import argparse
+import listening
 import re
 import sys
 import settings
-import speech
+import speaking
 import assistantdb
 
 def CoreNLPFail(sentence):
@@ -21,10 +22,10 @@ def Integrate(optional_message = None):
     else:
         greeting_str = 'Hi ' + settings.username.capitalize()
         greeting_str += '! What can I help you with?'
-        speech.speak(greeting_str, True)
-        (success, sentence) = speech.listen()
+        speaking.speak(greeting_str, True)
+        (success, sentence) = listening.listen()
         if not success:
-            speech.speak(sentence, True)
+            speaking.speak(sentence, True)
             exit()
     # CoreNLP is weird, need to replace some stuff to make it properly recognize short sentences
     sentence = sentence.replace("Start", "start").replace("open", "Open").replace("Please", "").replace("please", "")
@@ -42,7 +43,7 @@ def Integrate(optional_message = None):
         verb_object = noun2
 
     if not assistantdb.parse(verb.lower(), verb_object.lower(), noun2.lower(), verb2.lower(), adjective.lower()):
-        speech.speak('Sorry, I don\'t understand what you want.', True)
+        speaking.speak('Sorry, I don\'t understand what you want.', True)
 
 if __name__ == "__main__":
     # Command line argument parsing
@@ -56,7 +57,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # Main code
     if args.text_only_mode:
-        speech.text_only_mode = True
+        listening.text_only_mode = True
+        speaking.text_only_mode = True
     if args.command_string:
         Integrate(args.command_string)
     else:
