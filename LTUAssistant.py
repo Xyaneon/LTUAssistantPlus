@@ -17,7 +17,7 @@ def Integrate(optional_message = None):
     import CoreNLP
     if optional_message:
         sentence = optional_message
-        print "Text input provided: '" + optional_message + "'"
+        print("Text input provided: '" + optional_message + "'")
     else:
         greeting_str = 'Hi ' + settings.username.capitalize()
         greeting_str += '! What can I help you with?'
