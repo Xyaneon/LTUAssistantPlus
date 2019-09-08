@@ -24,5 +24,12 @@ Install the [`stanfordnlp`][stanfordnlp] (v0.2.0) package once this is done:
 python -m pip install stanfordnlp
 ```
 
+Install the [SpeechRecognition][SpeechRecognition] (>=3.8.1) package:
+
+```
+python -m pip install SpeechRecognition
+```
+
 [PyTorch]: https://pytorch.org/
+[SpeechRecognition]: https://pypi.org/project/SpeechRecognition/
 [stanfordnlp]: https://stanfordnlp.github.io/stanfordnlp/
