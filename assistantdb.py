@@ -2,7 +2,6 @@
 
 import argparse
 import calendardb
-import notify2
 import speech  # Used here for interactive questions
 import settings
 import subprocess
