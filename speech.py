@@ -2,13 +2,10 @@
 
 # NOTE: this example requires PyAudio because it uses the Microphone class
 
-import notify2
-import dbus
+import notifications
 import settings
 import speech_recognition as sr
 import subprocess
-
-notify2.init('LTU Assistant')
 
 text_only_mode = False
 
@@ -16,14 +13,7 @@ def speak(message, also_cmd=False):
     '''Speak the given message using the text-to-speech backend.'''
     if also_cmd or text_only_mode:
         print(message)
-    try:
-        notification = notify2.Notification('LTU Assistant',
-                                            message,
-                                            'notification-message-im')
-        notification.show()
-    except dbus.exceptions.DBusException:
-        if not also_cmd:
-            print(message)
+    notifications.show_notification(message, also_cmd)
     if not text_only_mode:
         if settings.voice == 'female':
             # Speak using a female voice
