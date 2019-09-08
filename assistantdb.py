@@ -2,7 +2,8 @@
 
 import argparse
 import calendardb
-import speech  # Used here for interactive questions
+import interactions
+import speaking
 import settings
 import subprocess
 import sys
@@ -13,37 +14,37 @@ def process_website(site_name, verbose):
     '''Take appropriate action with the given site name.
     The site_name can either be an actual website name or a valid URL.'''
     if site_name in ['bannerweb', 'banner', 'registration', 'financial aid']:
-        speech.speak('Opening BannerWeb...', verbose)
+        speaking.speak('Opening BannerWeb...', verbose)
         webbrowser.open('https://www.ltu.edu/bannerweb')
     elif site_name in ['blackboard', 'bb']:
-        speech.speak('Opening BlackBoard...', verbose)
+        speaking.speak('Opening BlackBoard...', verbose)
         webbrowser.open('https://my.ltu.edu')
     elif site_name in ['library', 'ltu library']:
-        speech.speak('Opening the LTU Library homepage...', verbose)
+        speaking.speak('Opening the LTU Library homepage...', verbose)
         webbrowser.open('https://www.ltu.edu/library')
     elif site_name in ['help desk', 'helpdesk', 'tech support', 'ehelp']:
-        speech.speak('Opening LTU eHelp homepage...', verbose)
+        speaking.speak('Opening LTU eHelp homepage...', verbose)
         webbrowser.open('http://www.ltu.edu/ehelp/')
     elif site_name in ['password', 'mypassword']:
-        speech.speak('Opening MyPassword web service...', verbose)
+        speaking.speak('Opening MyPassword web service...', verbose)
         webbrowser.open('https://mypassword.campus.ltu.edu/')
     elif site_name in ['ltu.edu', 'ltu website', 'ltu homepage']:
-        speech.speak('Opening the main LTU website...', verbose)
+        speaking.speak('Opening the main LTU website...', verbose)
         webbrowser.open('http://www.ltu.edu')
     elif site_name in ['email', 'webmail', 'mail', 'gmail']:
-        speech.speak('Opening Gmail...', verbose)
+        speaking.speak('Opening Gmail...', verbose)
         webbrowser.open('https://gmail.com')
     elif site_name in ['calendar', 'schedule', 'events']:
-        speech.speak('Opening Google Calendar...', verbose)
+        speaking.speak('Opening Google Calendar...', verbose)
         webbrowser.open('https://calendar.google.com')
     # Khalil added this
     elif site_name == 'weather':
         process_weather(verbose)
     elif site_name in ['ltu events', 'ltu event']:
-        speech.speak('Opening ltu events...', verbose)
+        speaking.speak('Opening ltu events...', verbose)
         webbrowser.open('http://www.ltu.edu/myltu/calendar.asp')
     else:
-        speech.speak("I couldn't understand what website you want to open")
+        speaking.speak("I couldn't understand what website you want to open")
 
 def process_send_email(recipient_info, verbose):
     '''Take appropriate action with the given email recipient information.'''
@@ -51,7 +52,7 @@ def process_send_email(recipient_info, verbose):
         recipient = 'mailto:' + recipient_info  # Open default email client
     else:
         recipient = 'https://mail.google.com/mail/u/0/#compose' # Gmail
-    speech.speak('Composing an email...', verbose)
+    speaking.speak('Composing an email...', verbose)
     webbrowser.open(recipient)
 
 def process_find_room(room_str, verbose):
@@ -90,25 +91,25 @@ def process_find_room(room_str, verbose):
                 finder_message = 'Sorry, I don\'t know which building that is.'
     else:
         finder_message = 'Sorry, but I don\'t think you told me which room you want.'
-    speech.speak(finder_message, verbose)
+    speaking.speak(finder_message, verbose)
 
 def process_add_cal_event(event_str, verbose):
     '''Schedule a new calendar event with the user.'''
     if event_str == 'event':
-        event_sentence = speech.ask_question('Okay, what is the event called?', verbose)
-        day_sentence = speech.ask_question('What day will this be on?', verbose)
-        time_sentence = speech.ask_question('What time will this start at?', verbose)
+        event_sentence = interactions.ask_question('Okay, what is the event called?', verbose)
+        day_sentence = interactions.ask_question('What day will this be on?', verbose)
+        time_sentence = interactions.ask_question('What time will this start at?', verbose)
         cal_event = calendardb.CalendarEvent(event_sentence, day_sentence, time_sentence, '')
         calendardb.add_event(cal_event)
         feedback_sentence = 'Alright, I\'m putting down ' + str(cal_event) + '.'
-        speech.speak(feedback_sentence, verbose)
+        speaking.speak(feedback_sentence, verbose)
     else:
-        speech.speak('Sorry, I am unable to help you schedule this right now.', verbose)
+        speaking.speak('Sorry, I am unable to help you schedule this right now.', verbose)
 
 def process_weather(verbose):
     '''Tells the user what the current weather conditions are.'''
     degrees, status = web.GetWeatherInfo()
-    speech.speak("It is " + degrees + " degrees and " + status.lower() + ".", verbose)
+    speaking.speak("It is " + degrees + " degrees and " + status.lower() + ".", verbose)
 
 def process_schedule(verbose):
     '''Tells the user what events are planned for today from the calendar DB.'''
@@ -131,19 +132,19 @@ def process_schedule(verbose):
                                     event.start_time_str]) + ', '
         output_str += ' '.join(['and', event_list[-1].event_str, 'at',
                                 event_list[-1].start_time_str]) + '.'
-    speech.speak(output_str, verbose)
+    speaking.speak(output_str, verbose)
 
 def process_voice(voice):
     if voice in ("female", "male"):
         settings.set_voice(voice)
-        speech.speak('Okay, I will use a %s voice from now on.' % (voice), True)
+        speaking.speak('Okay, I will use a %s voice from now on.' % (voice), True)
     else:
-        speech.speak('I don\'t understand what voice you want')
+        speaking.speak('I don\'t understand what voice you want')
 
 def process_name_change(new_name):
     if new_name:
         settings.set_username(new_name)
-        speech.speak('Pleased to meet you, ' + settings.username + '!', True)
+        speaking.speak('Pleased to meet you, ' + settings.username + '!', True)
         return True
     else:
         return False
@@ -185,16 +186,16 @@ def parse(verb, verb_object, alternate_noun, alternate_verb, adjective, verbose=
         elif verb_object == "schedule":
             process_schedule(verbose)
         elif verb_object == "time":
-            speech.speak('It is currently ' + calendardb.get_current_time() + '.', True)
+            speaking.speak('It is currently ' + calendardb.get_current_time() + '.', True)
         elif verb_object == "date" or verb_object == "day":
-            speech.speak('Today is ' + calendardb.get_current_date() + '.', True)
+            speaking.speak('Today is ' + calendardb.get_current_date() + '.', True)
         else:
             return False
     elif verb == "is":
         if verb_object == "time":
-            speech.speak('It is currently ' + calendardb.get_current_time() + '.', True)
+            speaking.speak('It is currently ' + calendardb.get_current_time() + '.', True)
         elif verb_object == "date" or verb_object == "day":
-            speech.speak('Today is ' + calendardb.get_current_date() + '.', True)
+            speaking.speak('Today is ' + calendardb.get_current_date() + '.', True)
         elif verb_object == "name":
             return process_name_change(alternate_noun)
     elif verb == "call":
