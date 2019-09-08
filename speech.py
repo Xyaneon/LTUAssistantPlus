@@ -26,7 +26,7 @@ def listen():
     '''Gets a command from the user, either via the microphone or command line
     if text-only mode was specified.'''
     if text_only_mode:
-        ret = raw_input('\t> ')
+        ret = input('\t> ')
         return True, ret
     else:
         # obtain audio from the microphone
