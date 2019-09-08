@@ -4,23 +4,11 @@
 
 import notifications
 import settings
+import speaking
 import speech_recognition as sr
 import subprocess
 
 text_only_mode = False
-
-def speak(message, also_cmd=False):
-    '''Speak the given message using the text-to-speech backend.'''
-    if also_cmd or text_only_mode:
-        print(message)
-    notifications.show_notification(message, also_cmd)
-    if not text_only_mode:
-        if settings.voice == 'female':
-            # Speak using a female voice
-            subprocess.call('espeak -v+f1 "' + message + '"', shell=True)
-        else:
-            # Default to male voice
-            subprocess.call('espeak "' + message + '"', shell=True)
 
 def listen():
     '''Gets a command from the user, either via the microphone or command line
@@ -55,15 +43,15 @@ def listen():
 
 def ask_question(question, also_cmd=False):
     '''Ask the user a question and return the reply as a string.'''
-    speak(question, also_cmd)
+    speaking.speak(question, also_cmd)
     num_tries = 3
     for x in range(0, num_tries):
         (success, sentence) = listen()
         if success:
             return sentence
         else:
-            speak('I\'m sorry, could you repeat that?', also_cmd)
-    speak('I\'m sorry, I could not understand you.', also_cmd)
+            speaking.speak('I\'m sorry, could you repeat that?', also_cmd)
+    speaking.speak('I\'m sorry, I could not understand you.', also_cmd)
     return ''
 
 if __name__ == '__main__':
