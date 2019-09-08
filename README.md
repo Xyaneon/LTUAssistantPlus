@@ -30,6 +30,13 @@ Install the [SpeechRecognition][SpeechRecognition] (>=3.8.1) package:
 python -m pip install SpeechRecognition
 ```
 
+Install the [win10toast][win10toast] package:
+
+```
+python -m pip install win10toast
+```
+
 [PyTorch]: https://pytorch.org/
 [SpeechRecognition]: https://pypi.org/project/SpeechRecognition/
 [stanfordnlp]: https://stanfordnlp.github.io/stanfordnlp/
+[win10toast]: https://github.com/jithurjacob/Windows-10-Toast-Notifications
