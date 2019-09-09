@@ -10,6 +10,7 @@ On Windows, navigate into the cloned project directory and run:
 
 ```
 python -m venv .venv
+.venv\Scripts\activate
 ```
 
 Get [PyTorch][PyTorch] installed as a dependency of the `stanfordnlp` package:
