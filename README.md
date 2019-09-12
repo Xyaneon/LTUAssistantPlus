@@ -2,6 +2,8 @@
 
 LTUAssistantPlus is a voice-controlled AI assistant created specifically for use by LTU students.
 
+This is a continuation of the [LTUAssistant][LTUAssistant] project.
+
 ## Setup
 
 You will first need Python installed. This project has been tested with Python 3.6.8 64-bit on Windows 10.
@@ -43,6 +45,7 @@ Install the [win10toast][win10toast] package:
 python -m pip install win10toast
 ```
 
+[LTUAssistant]: https://github.com/Xyaneon/LTUAssistant
 [PyAudio]: http://people.csail.mit.edu/hubert/pyaudio/
 [PyTorch]: https://pytorch.org/
 [SpeechRecognition]: https://pypi.org/project/SpeechRecognition/
