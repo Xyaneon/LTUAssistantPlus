@@ -1,15 +1,17 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
-# NOTE: this example requires PyAudio because it uses the Microphone class
+# NOTE: This module requires PyAudio because it uses the Microphone class.
 
 import notifications
 import settings
 import speech_recognition as sr
 import subprocess
 
+from typing import Tuple
+
 text_only_mode = False
 
-def listen():
+def listen() -> Tuple[bool, str]:
     '''Gets a command from the user, either via the microphone or command line
     if text-only mode was specified.'''
     if text_only_mode:
@@ -17,7 +19,7 @@ def listen():
     else:
         return __listen_from_microphone()
 
-def __listen_from_microphone():
+def __listen_from_microphone() -> Tuple[bool, str]:
     '''Gets a command from the user via the microphone.'''
     r = sr.Recognizer()
     ret = ""
@@ -41,7 +43,7 @@ def __listen_from_microphone():
         ret = "Could not request results from Google Speech Recognition."
     return False, ret
 
-def __listen_from_terminal():
+def __listen_from_terminal() -> Tuple[bool, str]:
     '''Gets a command from the user via the CLI.'''
     ret = input('\t> ')
     return True, ret

@@ -10,9 +10,11 @@ import sys
 import webbrowser
 import web
 
-def process_website(site_name, verbose):
-    '''Take appropriate action with the given site name.
-    The site_name can either be an actual website name or a valid URL.'''
+from nlp.universal_dependencies import ParsedUniversalDependencies
+
+def process_website(site_name: str, verbose: bool):
+    """Take appropriate action with the given site name.
+    The site_name can either be an actual website name or a valid URL."""
     if site_name in ['bannerweb', 'banner', 'registration', 'financial aid']:
         speaking.speak('Opening BannerWeb...', verbose)
         webbrowser.open('https://www.ltu.edu/bannerweb')
@@ -46,8 +48,8 @@ def process_website(site_name, verbose):
     else:
         speaking.speak("I couldn't understand what website you want to open")
 
-def process_send_email(recipient_info, verbose):
-    '''Take appropriate action with the given email recipient information.'''
+def process_send_email(recipient_info: str, verbose: bool):
+    """Take appropriate action with the given email recipient information."""
     if recipient_info and recipient_info.find("@") != -1:
         recipient = 'mailto:' + recipient_info  # Open default email client
     else:
@@ -55,8 +57,8 @@ def process_send_email(recipient_info, verbose):
     speaking.speak('Composing an email...', verbose)
     webbrowser.open(recipient)
 
-def process_find_room(room_str, verbose):
-    '''Try to provide information for a given room number.'''
+def process_find_room(room_str: str, verbose: bool):
+    """Try to provide information for a given room number."""
     finder_message = ''
     if room_str:
         words = room_str.split()
@@ -93,8 +95,8 @@ def process_find_room(room_str, verbose):
         finder_message = 'Sorry, but I don\'t think you told me which room you want.'
     speaking.speak(finder_message, verbose)
 
-def process_add_cal_event(event_str, verbose):
-    '''Schedule a new calendar event with the user.'''
+def process_add_cal_event(event_str: str, verbose: bool):
+    """Schedule a new calendar event with the user."""
     if event_str == 'event':
         event_sentence = interactions.ask_question('Okay, what is the event called?', verbose)
         day_sentence = interactions.ask_question('What day will this be on?', verbose)
@@ -106,13 +108,13 @@ def process_add_cal_event(event_str, verbose):
     else:
         speaking.speak('Sorry, I am unable to help you schedule this right now.', verbose)
 
-def process_weather(verbose):
-    '''Tells the user what the current weather conditions are.'''
+def process_weather(verbose: bool):
+    """Tells the user what the current weather conditions are."""
     degrees, status = web.GetWeatherInfo()
     speaking.speak("It is " + degrees + " degrees and " + status.lower() + ".", verbose)
 
-def process_schedule(verbose):
-    '''Tells the user what events are planned for today from the calendar DB.'''
+def process_schedule(verbose: bool):
+    """Tells the user what events are planned for today from the calendar DB."""
     event_list = calendardb.get_todays_events()
     if len(event_list) < 1:
         output_str = 'There are no events currently scheduled.'
@@ -134,14 +136,22 @@ def process_schedule(verbose):
                                 event_list[-1].start_time_str]) + '.'
     speaking.speak(output_str, verbose)
 
-def process_voice(voice):
+def process_tell_date(verbose: bool):
+    """Tells the user what the current date is."""
+    speaking.speak(f"It is currently {calendardb.get_current_date()}.", True)
+
+def process_tell_time(verbose: bool):
+    """Tells the user what the current time is."""
+    speaking.speak(f"It is currently {calendardb.get_current_time()}.", True)
+
+def process_voice(voice: str):
     if voice in ("female", "male"):
         settings.set_voice(voice)
         speaking.speak('Okay, I will use a %s voice from now on.' % (voice), True)
     else:
         speaking.speak('I don\'t understand what voice you want')
 
-def process_name_change(new_name):
+def process_name_change(new_name: str):
     if new_name:
         settings.set_username(new_name)
         speaking.speak('Pleased to meet you, ' + settings.username + '!', True)
@@ -149,15 +159,18 @@ def process_name_change(new_name):
     else:
         return False
 
-def parse(verb, verb_object, alternate_noun, alternate_verb, adjective, verbose=False):
-    '''Parse the command and take an action. Returns True if the command is
-    understood, and False otherwise.'''
+def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = False) -> bool:
+    """Parse the command and take an action. Returns True if the command is
+    understood, and False otherwise."""
+    verb = (ud.verb or None) and ud.verb.lower()
+    verb_object = ud.noun
+    alternate_noun = ud.noun # TODO: Actually get the correct alternate noun.
+    adjective = (ud.adj or None) and ud.adj.lower()
     # Print parameters for debugging purposes
-    print('\tverb:           ' + verb)
-    print('\tverb_object:    ' + verb_object)
-    print('\talternate_verb: ' + alternate_verb)
-    print('\talternate_noun: ' + alternate_noun)
-    print('\tadjective:      ' + adjective)
+    print('\tverb:           ' + (verb if verb is not None else "(None)"))
+    print('\tverb_object:    ' + (verb_object if verb_object is not None else "(None)"))
+    print('\talternate_noun: ' + (alternate_noun if alternate_noun is not None else "(None)"))
+    print('\tadjective:      ' + (adjective if adjective is not None else "(None)"))
     browse_cmd_list = ['start', 'open', 'go', 'go to', 'browse', 'browse to', 'launch', 'take to', 'show'] #Original verb only + addition verb 'show'
     email_cmd_list = ['email', 'compose', 'compose to', 'send', 'send to', "write", "write to"]
     roomfinder_cmd_list = ['find', 'where is']
@@ -165,37 +178,31 @@ def parse(verb, verb_object, alternate_noun, alternate_verb, adjective, verbose=
     voice_cmd_list = ['use']
 
     if verb in browse_cmd_list:
-        # Open an indicated web page in the default browser
         process_website(verb_object, verbose)
     elif verb in email_cmd_list:
-        # Open a window to compose an email
         process_send_email(verb_object, verbose)
     elif verb in roomfinder_cmd_list:
-        # Tell the user which building and floor a room is in
         process_find_room(verb_object, verbose)
     elif verb in calendar_cmd_list:
-        # Schedule an event for the user
         process_add_cal_event(verb_object, verbose)
     elif verb in voice_cmd_list:
-        # Change voice between male / female
         process_voice(adjective)
-    # This could be a few things
     elif verb == "what is" or verb == "tell":
         if verb_object.find("weather") != -1:
             process_weather(verbose)
         elif verb_object == "schedule":
             process_schedule(verbose)
         elif verb_object == "time":
-            speaking.speak('It is currently ' + calendardb.get_current_time() + '.', True)
+            process_tell_time(verbose)
         elif verb_object == "date" or verb_object == "day":
-            speaking.speak('Today is ' + calendardb.get_current_date() + '.', True)
+            process_tell_date(verbose)
         else:
             return False
     elif verb == "is":
         if verb_object == "time":
-            speaking.speak('It is currently ' + calendardb.get_current_time() + '.', True)
+            process_tell_time(verbose)
         elif verb_object == "date" or verb_object == "day":
-            speaking.speak('Today is ' + calendardb.get_current_date() + '.', True)
+            process_tell_date(verbose)
         elif verb_object == "name":
             return process_name_change(alternate_noun)
     elif verb == "call":
@@ -204,7 +211,6 @@ def parse(verb, verb_object, alternate_noun, alternate_verb, adjective, verbose=
         return False
     return True
 
-# For executing this module on its own:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('verb', type=str, help='Assistant database command.')
@@ -216,5 +222,6 @@ if __name__ == '__main__':
 
     if args.verbose:
         print(sys.version)
-    parse(args.verb, args.verb_object, None, None, args.verbose)
+    ud = ParsedUniversalDependencies(verb = args.verb, noun = args.verb_object)
+    identify_and_run_command(ud, args.verbose)
     exit()

@@ -1,52 +1,31 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 import argparse
+import interactions
 import listening
 import re
 import sys
 import settings
 import speaking
 import assistantdb
+from nlp.natural_language_processing import Parse
 
-def CoreNLPFail(sentence):
-    words = sentence.split()
-    possibleVerb = words[0].lower()
-    if possibleVerb in ("show", "plan"):
-        return possibleVerb, sentence[len(possibleVerb)+1:]
-
-def Integrate(optional_message = None):
-    import CoreNLP
+def process_command(optional_message: str = None):
+    """Processes a command, either supplied as a parameter or obtained from
+    user interaction."""
     if optional_message:
         sentence = optional_message
-        print("Text input provided: '" + optional_message + "'")
+        print(f"Text input provided: {optional_message}")
     else:
-        greeting_str = 'Hi ' + settings.username.capitalize()
-        greeting_str += '! What can I help you with?'
-        speaking.speak(greeting_str, True)
-        (success, sentence) = listening.listen()
+        (success, sentence) = interactions.greet_user_and_ask_for_command(settings.username.capitalize())
         if not success:
-            speaking.speak(sentence, True)
-            exit()
-    # CoreNLP is weird, need to replace some stuff to make it properly recognize short sentences
-    sentence = sentence.replace("Start", "start").replace("open", "Open").replace("Please", "").replace("please", "")
-
-    # Call NLP parsing function
-    (verb, verb_object, noun2, verb2, preposition, adjective) = CoreNLP.Parse(sentence)
-
-    # Fix some more edge cases with broken sentences
-    if not verb:
-        verb, verb_object = CoreNLPFail(sentence)
-
-    # TODO: Eventually we should probably not attach the preposition to the verb (does it actually improve accuracy?)
-    if preposition:
-        verb = "%s %s" % (verb, preposition)
-        verb_object = noun2
-
-    if not assistantdb.parse(verb.lower(), verb_object.lower(), noun2.lower(), verb2.lower(), adjective.lower()):
-        speaking.speak('Sorry, I don\'t understand what you want.', True)
+            interactions.tell_user_could_not_be_heard()
+            return
+    ud = Parse(sentence)
+    if not assistantdb.identify_and_run_command(ud):
+        interactions.tell_user_command_was_not_understood()
 
 if __name__ == "__main__":
-    # Command line argument parsing
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--text-only-mode',
                         help='make all user interaction happen in the terminal',
@@ -55,11 +34,11 @@ if __name__ == "__main__":
                         help='user\'s initial command text in string form',
                         type=str)
     args = parser.parse_args()
-    # Main code
+    
     if args.text_only_mode:
         listening.text_only_mode = True
         speaking.text_only_mode = True
     if args.command_string:
-        Integrate(args.command_string)
+        process_command(args.command_string)
     else:
-        Integrate()
+        process_command()
