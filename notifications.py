@@ -24,7 +24,7 @@ def show_notification(message, also_cmd=False):
             if not also_cmd:
                 print(message)
     elif platform_string == "Windows":
-        toaster.show_toast("LTU Assistant", message)
+        toaster.show_toast("LTU Assistant", message, threaded=True)
 
 if __name__ == "__main__":
     show_notification("LTU Assistant", "This is a test notification.")
