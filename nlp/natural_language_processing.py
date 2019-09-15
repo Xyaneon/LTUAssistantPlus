@@ -3,7 +3,7 @@
 import stanfordnlp
 from stanfordnlp.pipeline.doc import Sentence
 from typing import List, Optional
-from universal_dependencies import ParsedUniversalDependencies
+from nlp.universal_dependencies import ParsedUniversalDependencies
 
 stanfordnlp.download('en')   # This downloads the English models for the neural pipeline
 nlp = stanfordnlp.Pipeline() # This sets up a default neural pipeline in English
