@@ -60,3 +60,9 @@ class ParsedUniversalDependencies(object):
         """The VERB (verb) tag associated with the parsed sentence."""
         self.x = x
         """The X (other) tag associated with the parsed sentence."""
+    
+    def __repr__(self) -> str:
+        """Returns a string representation of this object."""
+        attributes = ["adj", "adp", "adv", "aux", "cconj", "det", "intj", "noun", "num", "part", "pron", "propn", "punct", "sconj", "sym", "verb", "x"]
+        attributes_str = ";".join(["{}={}".format(attribute, getattr(self, attribute)) for attribute in attributes if getattr(self, attribute) is not None])
+        return f"<{self.__class__.__name__} {attributes_str}>"
