@@ -7,7 +7,18 @@ from typing import List
 stanfordnlp.download('en')   # This downloads the English models for the neural pipeline
 nlp = stanfordnlp.Pipeline() # This sets up a default neural pipeline in English
 
-def Parse(text):
+class SentenceParsingResults(object):
+    """Represents the results of sentence parsing."""
+
+    def __init__(self, verb: str = None, verb_object: str = None, noun2: str = None, verb2: str = None, preposition: str = None, adjective: str = None):
+        self.verb = verb
+        self.verb_object = verb_object
+        self.noun2 = noun2
+        self.verb2 = verb2
+        self.preposition = preposition,
+        self.adjective = adjective
+
+def Parse(text: str) -> SentenceParsingResults:
     """Parses the provided text."""
     sentences = __parse_sentences_from_text(text)
     verb = noun = new_noun = new_verb = prep = adjective = None
@@ -47,11 +58,11 @@ def Parse(text):
         else:
             print("Could not find any verbs")
         
-        # Just return the first sentence only for now.
+        # Just return results for the first sentence only for now.
         print("\n")
         
         final_verb = __get_words(sentence, verb)
-        return final_verb, __get_words(sentence, noun), __get_words(sentence, new_noun), __get_words(sentence, new_verb), __get_words(sentence, prep), __get_words(sentence, adjective)
+        return SentenceParsingResults(final_verb, __get_words(sentence, noun), __get_words(sentence, new_noun), __get_words(sentence, new_verb), __get_words(sentence, prep), __get_words(sentence, adjective))
 
 def __confirm_verb(sentence: Sentence, verb):
     """
@@ -65,7 +76,7 @@ def __confirm_verb(sentence: Sentence, verb):
         return new_verb
     return None
 
-def __find_dependency(sentence: Sentence, pos, dep_type, reverse = False):
+def __find_dependency(sentence: Sentence, pos, dep_type: str, reverse: bool = False):
     """
     Searches the dependencies of the parsed sentence to find relationships
     between words.
