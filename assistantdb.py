@@ -162,10 +162,10 @@ def process_name_change(new_name: str):
 def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is
     understood, and False otherwise."""
-    verb = ud.verb
+    verb = (ud.verb or None) and ud.verb.lower()
     verb_object = ud.noun
     alternate_noun = ud.noun # TODO: Actually get the correct alternate noun.
-    adjective = ud.adj
+    adjective = (ud.adj or None) and ud.adj.lower()
     # Print parameters for debugging purposes
     print('\tverb:           ' + (verb if verb is not None else "(None)"))
     print('\tverb_object:    ' + (verb_object if verb_object is not None else "(None)"))
@@ -209,7 +209,7 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = Fa
         return process_name_change(alternate_noun or verb_object)
     else:
         return False
-    return False
+    return True
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
