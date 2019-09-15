@@ -14,24 +14,24 @@ if platform_string == "Windows":
 
 text_only_mode = False
 
-def speak(message, also_cmd=False):
-    '''Speak the given message using the text-to-speech backend.'''
+def speak(message: str, also_cmd: bool = False):
+    """Speak the given message using the text-to-speech backend."""
     if also_cmd or text_only_mode:
         __say_in_terminal(message)
     __say_in_notification(message, also_cmd)
     if not text_only_mode:
         __say_via_audio(message)
 
-def __say_in_terminal(message):
-    '''Shows the spoken message in the CLI.'''
+def __say_in_terminal(message: str):
+    """Shows the spoken message in the CLI."""
     print(message)
 
-def __say_in_notification(message, also_cmd):
-    '''Shows the spoken message in a system notification.'''
+def __say_in_notification(message: str, also_cmd: bool):
+    """Shows the spoken message in a system notification."""
     notifications.show_notification(message, also_cmd)
 
-def __say_via_audio(message):
-    '''Says the spoken message via system audio.'''
+def __say_via_audio(message: str):
+    """Says the spoken message via system audio."""
     if platform_string == "Linux":
         if settings.voice == 'female':
             # Speak using a female voice
