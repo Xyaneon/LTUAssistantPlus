@@ -45,9 +45,17 @@ Install the [win10toast][win10toast] package:
 python -m pip install win10toast
 ```
 
+## License
+
+This project is made available under the MIT license. Please see the [LICENSE][license] file in the project root directory for details.
+
+License notices for third-party software libraries this project uses are listed in the [THIRD_PARTY_NOTICES.txt][third-party notices] file for reference.
+
+[license]: https://github.com/Xyaneon/LTUAssistantPlus/blob/master/LICENSE
 [LTUAssistant]: https://github.com/Xyaneon/LTUAssistant
 [PyAudio]: http://people.csail.mit.edu/hubert/pyaudio/
 [PyTorch]: https://pytorch.org/
 [SpeechRecognition]: https://pypi.org/project/SpeechRecognition/
 [stanfordnlp]: https://stanfordnlp.github.io/stanfordnlp/
+[third-party notices]: https://github.com/Xyaneon/LTUAssistantPlus/blob/master/THIRD_PARTY_NOTICES.txt
 [win10toast]: https://github.com/jithurjacob/Windows-10-Toast-Notifications
