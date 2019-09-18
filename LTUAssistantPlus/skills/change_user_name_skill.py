@@ -5,14 +5,14 @@ import settings
 import speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
+from .skill import Skill
 
-class ChangeAssistantVoiceSkill(Skill):
-    """Lets the user change the assistant's voice."""
+class ChangeUserNameSkill(Skill):
+    """Lets the user change the name the assistant refers to them by."""
 
     def __init__(self):
-        """Initializes a new instance of the ChangeAssistantVoiceSkill class."""
-        self._cmd_list = ['use']
+        """Initializes a new instance of the ChangeUserNameSkill class."""
+        self._cmd_list = ['call']
 
     def matches_command(self, command_input: ParsedUniversalDependencies) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
@@ -21,10 +21,12 @@ class ChangeAssistantVoiceSkill(Skill):
     
     def execute_for_command(self, command_input: ParsedUniversalDependencies, verbose: bool):
         """Executes this skill on the given command input."""
-        adjective = command_input.adj.lower()
-        voice = adjective
-        if voice in ("female", "male"):
-            settings.set_voice(voice)
-            speaking.speak('Okay, I will use a %s voice from now on.' % (voice), True)
+        verb_object = command_input.noun
+        alternate_noun = command_input.noun # TODO: Actually get the correct alternate noun.
+        new_name = alternate_noun or verb_object
+        if new_name:
+            settings.set_username(new_name)
+            speaking.speak(f"Pleased to meet you, {settings.username}!", True)
+            return True
         else:
-            speaking.speak('I don\'t understand what voice you want')
+            return False

@@ -5,7 +5,7 @@ import speaking
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
+from .skill import Skill
 
 class SendEmailSkill(Skill):
     """Lets the assistant send emails for the user."""

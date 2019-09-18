@@ -5,7 +5,7 @@ import interactions
 import speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
+from .skill import Skill
 
 class AddCalendarEventSkill(Skill):
     """Lets the assistant schedule a calendar event for the user."""

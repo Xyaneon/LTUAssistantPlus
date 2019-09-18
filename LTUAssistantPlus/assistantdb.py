@@ -4,18 +4,18 @@ import argparse
 import sys
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
 
-from open_website_skill import OpenWebsiteSkill
-from send_email_skill import SendEmailSkill
-from room_finder_skill import RoomFinderSkill
-from add_calendar_event_skill import AddCalendarEventSkill
-from get_weather_skill import GetWeatherSkill
-from tell_schedule_skill import TellScheduleSkill
-from tell_date_skill import TellDateSkill
-from tell_time_skill import TellTimeSkill
-from change_assistant_voice_skill import ChangeAssistantVoiceSkill
-from change_user_name_skill import ChangeUserNameSkill
+from skills.skill import Skill
+from skills.open_website_skill import OpenWebsiteSkill
+from skills.send_email_skill import SendEmailSkill
+from skills.room_finder_skill import RoomFinderSkill
+from skills.add_calendar_event_skill import AddCalendarEventSkill
+from skills.get_weather_skill import GetWeatherSkill
+from skills.tell_schedule_skill import TellScheduleSkill
+from skills.tell_date_skill import TellDateSkill
+from skills.tell_time_skill import TellTimeSkill
+from skills.change_assistant_voice_skill import ChangeAssistantVoiceSkill
+from skills.change_user_name_skill import ChangeUserNameSkill
 
 def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is

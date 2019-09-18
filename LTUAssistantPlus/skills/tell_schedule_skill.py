@@ -6,7 +6,7 @@ import speaking
 import web
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
+from .skill import Skill
 
 class TellScheduleSkill(Skill):
     """Lets the assistant tell the user their schedule."""

@@ -4,7 +4,7 @@ import interactions
 import speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
+from .skill import Skill
 
 class RoomFinderSkill(Skill):
     """Lets the assistant find LTU rooms for the user when given a room number."""

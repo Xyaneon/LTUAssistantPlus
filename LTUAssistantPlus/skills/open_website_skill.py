@@ -5,7 +5,7 @@ import speaking
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
+from .skill import Skill
 
 class OpenWebsiteSkill(Skill):
     """Lets the assistant open websites for the user."""

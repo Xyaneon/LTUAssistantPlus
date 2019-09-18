@@ -5,7 +5,7 @@ import interactions
 import speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from skill import Skill
+from .skill import Skill
 
 class TellDateSkill(Skill):
     """Lets the assistant tell the user the current date."""
