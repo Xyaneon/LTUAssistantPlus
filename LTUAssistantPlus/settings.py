@@ -3,13 +3,13 @@
 import configparser, os
 
 # Initialize INI file path
-folder = os.path.join(os.path.expanduser('~'), '.LTUAssistant')
+app_data_folder = os.path.join(os.path.expanduser('~'), '.LTUAssistant')
 try:
-    os.makedirs(folder)
+    os.makedirs(app_data_folder)
 except OSError:
-    if not os.path.isdir(folder):
+    if not os.path.isdir(app_data_folder):
         raise
-settings_ini_path = os.path.join(folder, 'settings.ini')
+settings_ini_path = os.path.join(app_data_folder, 'settings.ini')
 
 # Default settings
 username = 'student'

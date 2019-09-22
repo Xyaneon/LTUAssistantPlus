@@ -4,9 +4,15 @@ import stanfordnlp
 from stanfordnlp.pipeline.doc import Sentence
 from typing import List, Optional
 from nlp.universal_dependencies import ParsedUniversalDependencies
+import os
+from settings import app_data_folder
 
-stanfordnlp.download('en')   # This downloads the English models for the neural pipeline
-nlp = stanfordnlp.Pipeline() # This sets up a default neural pipeline in English
+stanfordnlp_resource_path = os.path.join(app_data_folder, "stanfordnlp_resources")
+
+if not os.path.exists(os.path.join(stanfordnlp_resource_path, "en_ewt_models")):
+    # This downloads the English models for the neural pipeline
+    stanfordnlp.download(download_label = 'en', resource_dir = stanfordnlp_resource_path, force = True)
+nlp = stanfordnlp.Pipeline(models_dir = stanfordnlp_resource_path) # This sets up a default neural pipeline in English
 
 def Parse(text: str) -> ParsedUniversalDependencies:
     """Parses the provided text."""
