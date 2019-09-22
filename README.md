@@ -45,6 +45,34 @@ Install the [win10toast][win10toast] package:
 python -m pip install win10toast
 ```
 
+## Usage
+
+After all package dependencies have been set up, run the following from the top-level directory (on Windows):
+
+```
+python .\LTUAssistantPlus\LTUAssistant.py
+```
+
+> **NOTE:**
+>
+> Currently, you will see a message like the following in the terminal when running the above command:
+> ```
+> Using the default treebank "en_ewt" for language "en".
+> Would you like to download the models for: en_ewt now? (Y/n)
+> ```
+> If this is the first time you are running the assistant, type `Y` and press <kbd>Enter</kbd> to download the
+> neural network needed by the `stanfordnlp` package to run. Be aware this download is about 235MB in size.
+> On subsequent runs, type `n` and press the <kbd>Enter</kbd> key to use the downloaded model right away.
+
+The assistant will greet you after the NLP pipeline initializes. Once you see the phrase
+`Say something!` in the terminal, you may speak your command and wait for the assistant to
+process it.
+
+> **NOTE:**
+>
+> Currently, the assistant can only process one command per session. To have it execute
+> another command, you need to restart the script.
+
 ## License
 
 This project is made available under the MIT license. Please see the [LICENSE][license] file in the project root directory for details.
