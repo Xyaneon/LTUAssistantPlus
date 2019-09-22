@@ -3,7 +3,6 @@
 import calendardb
 import interactions
 import speaking
-import web
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from .skill import Skill
