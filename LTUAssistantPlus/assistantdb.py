@@ -10,7 +10,6 @@ from skills.open_website_skill import OpenWebsiteSkill
 from skills.send_email_skill import SendEmailSkill
 from skills.room_finder_skill import RoomFinderSkill
 from skills.add_calendar_event_skill import AddCalendarEventSkill
-from skills.get_weather_skill import GetWeatherSkill
 from skills.tell_schedule_skill import TellScheduleSkill
 from skills.tell_date_skill import TellDateSkill
 from skills.tell_time_skill import TellTimeSkill
@@ -35,7 +34,6 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = Fa
         SendEmailSkill(),
         RoomFinderSkill(),
         AddCalendarEventSkill(),
-        GetWeatherSkill(),
         TellScheduleSkill(),
         TellDateSkill(),
         TellTimeSkill(),
