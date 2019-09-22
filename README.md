@@ -55,14 +55,11 @@ python .\LTUAssistantPlus\LTUAssistant.py
 
 > **NOTE:**
 >
-> Currently, you will see a message like the following in the terminal when running the above command:
-> ```
-> Using the default treebank "en_ewt" for language "en".
-> Would you like to download the models for: en_ewt now? (Y/n)
-> ```
-> If this is the first time you are running the assistant, type `Y` and press <kbd>Enter</kbd> to download the
-> neural network needed by the `stanfordnlp` package to run. Be aware this download is about 235MB in size.
-> On subsequent runs, type `n` and press the <kbd>Enter</kbd> key to use the downloaded model right away.
+> If this is the first time you are running the assistant, the neural network needed by the `stanfordnlp`
+> package to run will be automatically downloaded. Be aware this download is about 235MB in size.
+> On subsequent runs, the assistant should be ready right away.
+>
+> The assistant's data will be stored in the `~/.LTUAssistant` directory on your computer.
 
 The assistant will greet you after the NLP pipeline initializes. Once you see the phrase
 `Say something!` in the terminal, you may speak your command and wait for the assistant to
