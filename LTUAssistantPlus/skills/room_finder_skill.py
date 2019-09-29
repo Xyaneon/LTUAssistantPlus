@@ -4,7 +4,7 @@ import interactions
 import speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from .skill import Skill
+from .skill import SkillInput, Skill
 
 class RoomFinderSkill(Skill):
     """Lets the assistant find LTU rooms for the user when given a room number."""
@@ -13,14 +13,14 @@ class RoomFinderSkill(Skill):
         """Initializes a new instance of the RoomFinderSkill class."""
         self._cmd_list = ['find', 'where is']
 
-    def matches_command(self, command_input: ParsedUniversalDependencies) -> bool:
+    def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
-        verb = (command_input.verb or None) and command_input.verb.lower()
+        verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, command_input: ParsedUniversalDependencies, verbose: bool):
+    def execute_for_command(self, skill_input: SkillInput):
         """Executes this skill on the given command input."""
-        verb_object = command_input.noun
+        verb_object = skill_input.noun
         room_str = verb_object
         finder_message = ''
         if room_str:
@@ -56,4 +56,4 @@ class RoomFinderSkill(Skill):
                     finder_message = 'Sorry, I don\'t know which building that is.'
         else:
             finder_message = 'Sorry, but I don\'t think you told me which room you want.'
-        speaking.speak(finder_message, verbose)
+        speaking.speak(finder_message, skill_input.verbose)

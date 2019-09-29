@@ -5,7 +5,7 @@ import sys
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 
-from skills.skill import Skill
+from skills.skill import SkillInput, Skill
 from skills.open_website_skill import OpenWebsiteSkill
 from skills.send_email_skill import SendEmailSkill
 from skills.room_finder_skill import RoomFinderSkill
@@ -19,15 +19,13 @@ from skills.change_user_name_skill import ChangeUserNameSkill
 def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is
     understood, and False otherwise."""
-    verb = (ud.verb or None) and ud.verb.lower()
-    verb_object = ud.noun
-    alternate_noun = ud.noun # TODO: Actually get the correct alternate noun.
-    adjective = (ud.adj or None) and ud.adj.lower()
+    skill_input = SkillInput(ud, verbose)
+
     # Print parameters for debugging purposes
-    print('\tverb:           ' + (verb if verb is not None else "(None)"))
-    print('\tverb_object:    ' + (verb_object if verb_object is not None else "(None)"))
-    print('\talternate_noun: ' + (alternate_noun if alternate_noun is not None else "(None)"))
-    print('\tadjective:      ' + (adjective if adjective is not None else "(None)"))
+    print('\tverb:           ' + (skill_input.verb if skill_input.verb is not None else "(None)"))
+    print('\tverb_object:    ' + (skill_input.verb_object if skill_input.verb_object is not None else "(None)"))
+    print('\talternate_noun: ' + (skill_input.alternate_noun if skill_input.alternate_noun is not None else "(None)"))
+    print('\tadjective:      ' + (skill_input.adjective if skill_input.adjective is not None else "(None)"))
 
     available_skills = [
         OpenWebsiteSkill(),
@@ -41,8 +39,8 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = Fa
         ChangeUserNameSkill()]
     
     for available_skill in available_skills:
-        if available_skill.matches_command(ud):
-            available_skill.execute_for_command(ud, verbose)
+        if available_skill.matches_command(skill_input):
+            available_skill.execute_for_command(skill_input)
             return True
     return False
 
