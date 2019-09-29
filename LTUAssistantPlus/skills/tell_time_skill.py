@@ -5,7 +5,7 @@ import interactions
 import speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from .skill import Skill
+from .skill import SkillInput, Skill
 
 class TellTimeSkill(Skill):
     """Lets the assistant tell the user the current time."""
@@ -14,12 +14,12 @@ class TellTimeSkill(Skill):
         """Initializes a new instance of the TellTimeSkill class."""
         self._cmd_list = ['what is', 'tell']
 
-    def matches_command(self, command_input: ParsedUniversalDependencies) -> bool:
+    def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
-        verb = (command_input.verb or None) and command_input.verb.lower()
-        verb_object = (command_input.noun or None) and command_input.noun.lower()
+        verb = (skill_input.verb or None) and skill_input.verb.lower()
+        verb_object = (skill_input.noun or None) and skill_input.noun.lower()
         return verb in self._cmd_list and verb_object == "time"
     
-    def execute_for_command(self, command_input: ParsedUniversalDependencies, verbose: bool):
+    def execute_for_command(self, skill_input: SkillInput):
         """Executes this skill on the given command input."""
         speaking.speak(f"It is currently {calendardb.get_current_time()}.", True)
