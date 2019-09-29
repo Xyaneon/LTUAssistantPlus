@@ -16,6 +16,8 @@ from skills.tell_time_skill import TellTimeSkill
 from skills.change_assistant_voice_skill import ChangeAssistantVoiceSkill
 from skills.change_user_name_skill import ChangeUserNameSkill
 
+from typing import Optional
+
 def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is
     understood, and False otherwise."""
@@ -27,6 +29,17 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = Fa
     print('\talternate_noun: ' + (skill_input.alternate_noun if skill_input.alternate_noun is not None else "(None)"))
     print('\tadjective:      ' + (skill_input.adjective if skill_input.adjective is not None else "(None)"))
 
+    skill = _select_skill_for_input(skill_input)
+    if skill is not None:
+        skill.execute_for_command(skill_input)
+        return True
+    return False
+
+def _select_skill_for_input(skill_input: SkillInput) -> Optional[Skill]:
+    """
+    Selects a `Skill` which can process the given `SkillInput` and returns it.
+    Alternatively, `None` is returned if there is no suitable `Skill` found.
+    """
     available_skills = [
         OpenWebsiteSkill(),
         SendEmailSkill(),
@@ -37,12 +50,10 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, verbose: bool = Fa
         TellTimeSkill(),
         ChangeAssistantVoiceSkill(),
         ChangeUserNameSkill()]
-    
     for available_skill in available_skills:
         if available_skill.matches_command(skill_input):
-            available_skill.execute_for_command(skill_input)
-            return True
-    return False
+            return available_skill
+    return None
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
