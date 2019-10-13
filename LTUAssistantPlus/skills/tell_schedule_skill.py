@@ -17,7 +17,7 @@ class TellScheduleSkill(Skill):
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
         verb = (skill_input.verb or None) and skill_input.verb.lower()
-        verb_object = (skill_input.noun or None) and skill_input.noun.lower()
+        verb_object = (skill_input.verb_object or None) and skill_input.verb_object.lower()
         return verb in self._cmd_list and verb_object == "schedule"
     
     def execute_for_command(self, skill_input: SkillInput):
