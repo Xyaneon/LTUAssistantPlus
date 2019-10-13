@@ -12,6 +12,13 @@ class TestTellDateSkill(unittest.TestCase):
         self.skill = TellDateSkill()
     
     def test_skillShouldRecognizeCommand(self):
-        ud = ParsedUniversalDependencies(verb="what is", noun="date")
-        skill_input = SkillInput(ud, False)
-        self.assertTrue(self.skill.matches_command(skill_input))
+        verbs = ["what is", "tell"]
+        nouns = ["date", "day"]
+
+        for verb in verbs:
+            for noun in nouns:
+                ud = ParsedUniversalDependencies(verb=verb, noun=noun)
+                skill_input = SkillInput(ud, False)
+                self.assertTrue(
+                    self.skill.matches_command(skill_input),
+                    f"TellDateSkill did not recognize verb='{verb}' and noun='{noun}'")
