@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import interactions
-import speaking
+import user_interface.speaking
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
@@ -27,5 +27,5 @@ class SendEmailSkill(Skill):
             recipient = 'mailto:' + recipient_info  # Open default email client
         else:
             recipient = 'https://mail.google.com/mail/u/0/#compose' # Gmail
-        speaking.speak('Composing an email...', skill_input.verbose)
+        user_interface.speaking.speak('Composing an email...', skill_input.verbose)
         webbrowser.open(recipient)

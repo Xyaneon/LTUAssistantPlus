@@ -2,7 +2,7 @@
 
 import calendardb
 import interactions
-import speaking
+import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from .skill import SkillInput, Skill
@@ -22,4 +22,4 @@ class TellTimeSkill(Skill):
     
     def execute_for_command(self, skill_input: SkillInput):
         """Executes this skill on the given command input."""
-        speaking.speak(f"It is currently {calendardb.get_current_time()}.", True)
+        user_interface.speaking.speak(f"It is currently {calendardb.get_current_time()}.", True)

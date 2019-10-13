@@ -2,7 +2,7 @@
 
 import calendardb
 import interactions
-import speaking
+import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from .skill import SkillInput, Skill
@@ -41,4 +41,4 @@ class TellScheduleSkill(Skill):
                                         event.start_time_str]) + ', '
             output_str += ' '.join(['and', event_list[-1].event_str, 'at',
                                     event_list[-1].start_time_str]) + '.'
-        speaking.speak(output_str, skill_input.verbose)
+        user_interface.speaking.speak(output_str, skill_input.verbose)

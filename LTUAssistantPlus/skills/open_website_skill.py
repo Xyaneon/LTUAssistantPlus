@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import interactions
-import speaking
+import user_interface.speaking
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
@@ -23,7 +23,7 @@ class OpenWebsiteSkill(Skill):
         """Executes this skill on the given command input."""
         verb_object = skill_input.dependencies.noun or skill_input.dependencies.propn
         if verb_object is None:
-            speaking.speak("I couldn't understand what website you want to open.")
+            user_interface.speaking.speak("I couldn't understand what website you want to open.")
             return
         site_name = verb_object.lower()
         if site_name in ['bannerweb', 'banner', 'registration', 'financial aid']:
@@ -45,9 +45,9 @@ class OpenWebsiteSkill(Skill):
         elif site_name in ['ltu events', 'ltu event']:
             self.__open_site("ltu events", "http://www.ltu.edu/myltu/calendar.asp", skill_input.verbose)
         else:
-            speaking.speak("I don't recognize the website you want to open.")
+            user_interface.speaking.speak("I don't recognize the website you want to open.")
     
     def __open_site(self, site_name: str, site_url: str, verbose: bool):
         """Announces opening a site and then actually opens it."""
-        speaking.speak(f"Opening {site_name}...", verbose)
+        user_interface.speaking.speak(f"Opening {site_name}...", verbose)
         webbrowser.open(site_url)

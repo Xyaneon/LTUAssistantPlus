@@ -2,7 +2,7 @@
 
 import interactions
 import settings
-import speaking
+import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from .skill import SkillInput, Skill
@@ -25,6 +25,6 @@ class ChangeAssistantVoiceSkill(Skill):
         voice = adjective
         if voice in ("female", "male"):
             settings.set_voice(voice)
-            speaking.speak('Okay, I will use a %s voice from now on.' % (voice), True)
+            user_interface.speaking.speak('Okay, I will use a %s voice from now on.' % (voice), True)
         else:
-            speaking.speak('I don\'t understand what voice you want')
+            user_interface.speaking.speak('I don\'t understand what voice you want')

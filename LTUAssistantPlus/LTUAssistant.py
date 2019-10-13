@@ -6,7 +6,7 @@ import user_interface.listening
 import re
 import sys
 import settings
-import speaking
+import user_interface.speaking
 import assistantdb
 from nlp.natural_language_processing import Parse
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     
     if args.text_only_mode:
         user_interface.listening.text_only_mode = True
-        speaking.text_only_mode = True
+        user_interface.speaking.text_only_mode = True
     if args.command_string:
         process_command(args.command_string)
     else:

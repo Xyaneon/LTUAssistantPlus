@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import interactions
-import speaking
+import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from .skill import SkillInput, Skill
@@ -56,4 +56,4 @@ class RoomFinderSkill(Skill):
                     finder_message = 'Sorry, I don\'t know which building that is.'
         else:
             finder_message = 'Sorry, but I don\'t think you told me which room you want.'
-        speaking.speak(finder_message, skill_input.verbose)
+        user_interface.speaking.speak(finder_message, skill_input.verbose)

@@ -2,7 +2,7 @@
 
 import calendardb
 import interactions
-import speaking
+import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from .skill import SkillInput, Skill
@@ -30,6 +30,6 @@ class AddCalendarEventSkill(Skill):
             cal_event = calendardb.CalendarEvent(event_sentence, day_sentence, time_sentence, '')
             calendardb.add_event(cal_event)
             feedback_sentence = 'Alright, I\'m putting down ' + str(cal_event) + '.'
-            speaking.speak(feedback_sentence, skill_input.verbose)
+            user_interface.speaking.speak(feedback_sentence, skill_input.verbose)
         else:
-            speaking.speak('Sorry, I am unable to help you schedule this right now.', skill_input.verbose)
+            user_interface.speaking.speak('Sorry, I am unable to help you schedule this right now.', skill_input.verbose)

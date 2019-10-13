@@ -2,7 +2,7 @@
 
 import interactions
 import settings
-import speaking
+import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from .skill import SkillInput, Skill
@@ -26,7 +26,7 @@ class ChangeUserNameSkill(Skill):
         new_name = alternate_noun or verb_object
         if new_name:
             settings.set_username(new_name)
-            speaking.speak(f"Pleased to meet you, {settings.username}!", True)
+            user_interface.speaking.speak(f"Pleased to meet you, {settings.username}!", True)
             return True
         else:
             return False
