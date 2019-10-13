@@ -3,6 +3,12 @@ matrix:
   include:
     - name: "Python 3.7.1 on Xenial Linux"
       python: 3.6           # this works for Linux but is ignored on macOS or Windows
+      install:
+        - pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp36-cp36m-linux_x86_64.whl
+        - pip3 install stanfordnlp pyaudio SpeechRecognition win10toast
+      script:
+        - cd LTUAssistantPlus
+        - python3 -m unittest discover -v
     - name: "Python 3.6 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
       language: shell       # 'language: python' is an error on Travis CI Windows
@@ -10,10 +16,10 @@ matrix:
         - choco install python --version=3.6.8
         - python -m pip install --upgrade pip
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
-install:
-  - pip3 install --upgrade pip
-  - pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1-cp36-cp36m-win_amd64.whl
-  - pip3 install stanfordnlp pyaudio SpeechRecognition win10toast
-script:
-  - cd LTUAssistantPlus
-  - python3 -m unittest discover -v || python -m unittest discover -v
+      install:
+        - pip3 install --upgrade pip
+        - pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1-cp36-cp36m-win_amd64.whl
+        - pip3 install stanfordnlp pyaudio SpeechRecognition win10toast
+      script:
+        - cd LTUAssistantPlus
+        - python -m unittest discover -v
