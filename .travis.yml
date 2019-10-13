@@ -1,8 +1,13 @@
 language: python
 matrix:
   include:
-    - name: "Python 3.6 on Xenial Linux"
+    - name: "Python 3.6 on Ubuntu 18.04 (Bionic)"
+      dist: bionic
       python: 3.6           # this works for Linux but is ignored on macOS or Windows
+      virtualenv:
+        system_site_packages: true
+      before_install:
+        - sudo apt-get install portaudio19-dev
       install:
         - pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp36-cp36m-linux_x86_64.whl
         - pip3 install stanfordnlp pyaudio SpeechRecognition
