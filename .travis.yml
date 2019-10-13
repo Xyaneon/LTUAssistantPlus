@@ -1,11 +1,11 @@
 language: python
 matrix:
   include:
-    - name: "Python 3.7.1 on Xenial Linux"
+    - name: "Python 3.6 on Xenial Linux"
       python: 3.6           # this works for Linux but is ignored on macOS or Windows
       install:
         - pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp36-cp36m-linux_x86_64.whl
-        - pip3 install stanfordnlp pyaudio SpeechRecognition win10toast
+        - pip3 install stanfordnlp pyaudio SpeechRecognition
       script:
         - cd LTUAssistantPlus
         - python3 -m unittest discover -v
