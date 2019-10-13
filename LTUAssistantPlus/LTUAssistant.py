@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import argparse
-import interactions
+import user_interface.interactions
 import user_interface.listening
 import re
 import sys
@@ -17,13 +17,13 @@ def process_command(optional_message: str = None):
         sentence = optional_message
         print(f"Text input provided: {optional_message}")
     else:
-        (success, sentence) = interactions.greet_user_and_ask_for_command(settings.username.capitalize())
+        (success, sentence) = user_interface.interactions.greet_user_and_ask_for_command(settings.username.capitalize())
         if not success:
-            interactions.tell_user_could_not_be_heard()
+            user_interface.interactions.tell_user_could_not_be_heard()
             return
     ud = Parse(sentence)
     if not assistantdb.identify_and_run_command(ud):
-        interactions.tell_user_command_was_not_understood()
+        user_interface.interactions.tell_user_command_was_not_understood()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

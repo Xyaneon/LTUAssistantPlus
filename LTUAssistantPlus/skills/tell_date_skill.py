@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import calendardb
-import interactions
 import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies

@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import interactions
 import user_interface.speaking
 import webbrowser
 

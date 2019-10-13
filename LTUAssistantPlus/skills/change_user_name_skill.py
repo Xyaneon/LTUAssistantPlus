@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import interactions
 import settings
 import user_interface.speaking
 
