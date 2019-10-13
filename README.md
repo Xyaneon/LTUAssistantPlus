@@ -70,6 +70,15 @@ process it.
 > Currently, the assistant can only process one command per session. To have it execute
 > another command, you need to restart the script.
 
+## Testing
+
+This project includes some unit tests. To run all tests, navigate into the `LTUAssistantPlus` directory
+under the project root, then run this command:
+
+```
+python -m unittest discover -v
+```
+
 ## License
 
 This project is made available under the MIT license. Please see the [LICENSE][license] file in the project root directory for details.
