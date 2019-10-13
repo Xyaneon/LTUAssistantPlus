@@ -2,7 +2,7 @@
 
 import argparse
 import interactions
-import listening
+import user_interface.listening
 import re
 import sys
 import settings
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     if args.text_only_mode:
-        listening.text_only_mode = True
+        user_interface.listening.text_only_mode = True
         speaking.text_only_mode = True
     if args.command_string:
         process_command(args.command_string)

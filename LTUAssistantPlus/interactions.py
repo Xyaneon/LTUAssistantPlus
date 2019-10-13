@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import listening
+import user_interface.listening
 import speaking
 from typing import Tuple
 
@@ -9,7 +9,7 @@ def ask_question(question, also_cmd=False):
     speaking.speak(question, also_cmd)
     num_tries = 3
     for _ in range(0, num_tries):
-        (success, sentence) = listening.listen()
+        (success, sentence) = user_interface.listening.listen()
         if success:
             return sentence
         else:
@@ -27,7 +27,7 @@ def greet_user_and_ask_for_command(username: str) -> Tuple[bool, str]:
     a tuple indicating whether listening was successful and what the user said.
     """
     greet_user(username)
-    return listening.listen()
+    return user_interface.listening.listen()
 
 def tell_user_command_was_not_understood():
     """Tells the user their command was not understood."""
