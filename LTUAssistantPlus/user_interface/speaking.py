@@ -2,7 +2,7 @@
 
 # NOTE: this example requires PyAudio because it uses the Microphone class
 
-import notifications
+import user_interface.notifications
 import platform
 import settings
 import subprocess
@@ -28,7 +28,7 @@ def __say_in_terminal(message: str):
 
 def __say_in_notification(message: str, also_cmd: bool):
     """Shows the spoken message in a system notification."""
-    notifications.show_notification(message, also_cmd)
+    user_interface.notifications.show_notification(message, also_cmd)
 
 def __say_via_audio(message: str):
     """Says the spoken message via system audio."""

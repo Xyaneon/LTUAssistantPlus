@@ -2,7 +2,6 @@
 
 # NOTE: This module requires PyAudio because it uses the Microphone class.
 
-import notifications
 import settings
 import speech_recognition as sr
 import subprocess
