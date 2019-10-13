@@ -1,5 +1,7 @@
 # LTUAssistantPlus
 
+**NOTE: This project is an active work-in-progress.**
+
 LTUAssistantPlus is a voice-controlled AI assistant created specifically for use by LTU students.
 
 This is a continuation of the [LTUAssistant][LTUAssistant] project.
