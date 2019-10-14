@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 import calendardb
-import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
+from user_interface.speaking_service_base import SpeakingServiceBase
 from .skill import SkillInput, Skill
 
 class TellDateSkill(Skill):
@@ -19,6 +19,6 @@ class TellDateSkill(Skill):
         verb_object = (skill_input.verb_object or None) and skill_input.verb_object.lower()
         return verb in self._cmd_list and (verb_object == "date" or verb_object == "day")
     
-    def execute_for_command(self, skill_input: SkillInput):
+    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
         """Executes this skill on the given command input."""
-        user_interface.speaking.speak(f"It is currently {calendardb.get_current_date()}.", True)
+        speak_service.speak(f"It is currently {calendardb.get_current_date()}.", True)

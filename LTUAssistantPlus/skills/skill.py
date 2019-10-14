@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 from nlp.universal_dependencies import ParsedUniversalDependencies
+from user_interface.speaking_service_base import SpeakingServiceBase
 
 class SkillInput(object):
     """Represents the input data for a Skill at its entry point."""
@@ -26,6 +27,6 @@ class Skill(ABC):
         pass
     
     @abstractmethod
-    def execute_for_command(self, skill_input: SkillInput):
+    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
         """Executes this skill on the given command input."""
         pass

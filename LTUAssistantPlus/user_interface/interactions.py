@@ -1,38 +1,39 @@
 #!/usr/bin/python3
 
 import user_interface.listening
-import user_interface.speaking
+
+from user_interface.speaking_service_base import SpeakingServiceBase
 from typing import Tuple
 
-def ask_question(question, also_cmd=False):
+def ask_question(question, speak_service: SpeakingServiceBase, also_cmd=False):
     """Ask the user a question and return the reply as a string."""
-    user_interface.speaking.speak(question, also_cmd)
+    speak_service.speak(question, also_cmd)
     num_tries = 3
     for _ in range(0, num_tries):
         (success, sentence) = user_interface.listening.listen()
         if success:
             return sentence
         else:
-            user_interface.speaking.speak('I\'m sorry, could you repeat that?', also_cmd)
-    user_interface.speaking.speak('I\'m sorry, I could not understand you.', also_cmd)
+            speak_service.speak('I\'m sorry, could you repeat that?', also_cmd)
+    speak_service.speak('I\'m sorry, I could not understand you.', also_cmd)
     return ''
 
-def greet_user(username: str):
+def greet_user(username: str, speak_service: SpeakingServiceBase):
     """Greets the user and asks how we can help them."""
     greeting_str = f"Hi {username}! What can I help you with?"
-    user_interface.speaking.speak(greeting_str, True)
+    speak_service.speak(greeting_str, True)
 
-def greet_user_and_ask_for_command(username: str) -> Tuple[bool, str]:
+def greet_user_and_ask_for_command(username: str, speak_service: SpeakingServiceBase) -> Tuple[bool, str]:
     """Greets the user, asks how we can help them, and returns the response as
     a tuple indicating whether listening was successful and what the user said.
     """
-    greet_user(username)
+    greet_user(username, speak_service)
     return user_interface.listening.listen()
 
-def tell_user_command_was_not_understood():
+def tell_user_command_was_not_understood(speak_service: SpeakingServiceBase):
     """Tells the user their command was not understood."""
-    user_interface.speaking.speak("Sorry, I don't understand what you want.", True)
+    speak_service.speak("Sorry, I don't understand what you want.", True)
 
-def tell_user_could_not_be_heard():
+def tell_user_could_not_be_heard(speak_service: SpeakingServiceBase):
     """Tells the user they could not be heard."""
-    user_interface.speaking.speak("Sorry, I wasn't able to hear you.", True)
+    speak_service.speak("Sorry, I wasn't able to hear you.", True)

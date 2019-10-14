@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
-import user_interface.speaking
-
 from nlp.universal_dependencies import ParsedUniversalDependencies
+from user_interface.speaking_service_base import SpeakingServiceBase
 from .skill import SkillInput, Skill
 
 class RoomFinderSkill(Skill):
@@ -17,7 +16,7 @@ class RoomFinderSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput):
+    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.noun
         room_str = verb_object
@@ -55,4 +54,4 @@ class RoomFinderSkill(Skill):
                     finder_message = 'Sorry, I don\'t know which building that is.'
         else:
             finder_message = 'Sorry, but I don\'t think you told me which room you want.'
-        user_interface.speaking.speak(finder_message, skill_input.verbose)
+        speak_service.speak(finder_message, skill_input.verbose)

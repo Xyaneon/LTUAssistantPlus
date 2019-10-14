@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 import settings
-import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
+from user_interface.speaking_service_base import SpeakingServiceBase
 from .skill import SkillInput, Skill
 
 class ChangeUserNameSkill(Skill):
@@ -18,14 +18,14 @@ class ChangeUserNameSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput):
+    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.noun
         alternate_noun = skill_input.noun # TODO: Actually get the correct alternate noun.
         new_name = alternate_noun or verb_object
         if new_name:
             settings.set_username(new_name)
-            user_interface.speaking.speak(f"Pleased to meet you, {settings.username}!", True)
+            speak_service.speak(f"Pleased to meet you, {settings.username}!", True)
             return True
         else:
             return False

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 import settings
-import user_interface.speaking
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
+from user_interface.speaking_service_base import SpeakingServiceBase
 from .skill import SkillInput, Skill
 
 class ChangeAssistantVoiceSkill(Skill):
@@ -18,12 +18,12 @@ class ChangeAssistantVoiceSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput):
+    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
         """Executes this skill on the given command input."""
         adjective = skill_input.adj.lower()
         voice = adjective
         if voice in ("female", "male"):
             settings.set_voice(voice)
-            user_interface.speaking.speak('Okay, I will use a %s voice from now on.' % (voice), True)
+            speak_service.speak('Okay, I will use a %s voice from now on.' % (voice), True)
         else:
-            user_interface.speaking.speak('I don\'t understand what voice you want')
+            speak_service.speak('I don\'t understand what voice you want')
