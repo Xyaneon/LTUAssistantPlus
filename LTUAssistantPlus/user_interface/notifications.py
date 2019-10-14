@@ -5,11 +5,11 @@ import platform
 platform_string = platform.system()
 
 if platform_string == "Linux":
-    import notify2
-    import dbus
+    import notify2 # pylint: disable=import-error
+    import dbus    # pylint: disable=import-error
     notify2.init('LTU Assistant')
 elif platform_string == "Windows":
-    from win10toast import ToastNotifier
+    from win10toast import ToastNotifier # pylint: disable=import-error
     toaster = ToastNotifier()
 
 def show_notification(message, also_cmd=False):
