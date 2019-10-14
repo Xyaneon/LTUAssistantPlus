@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 
-import interactions
-import speaking
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
+from user_interface.user_interaction_service_base import UserInteractionServiceBase
 from .skill import SkillInput, Skill
 
 class OpenWebsiteSkill(Skill):
@@ -19,35 +18,48 @@ class OpenWebsiteSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput):
+    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.dependencies.noun or skill_input.dependencies.propn
         if verb_object is None:
-            speaking.speak("I couldn't understand what website you want to open.")
+            user_interaction_service.speak("I couldn't understand what website you want to open.")
             return
-        site_name = verb_object.lower()
-        if site_name in ['bannerweb', 'banner', 'registration', 'financial aid']:
-            self.__open_site("BannerWeb", "https://www.ltu.edu/bannerweb", skill_input.verbose)
-        elif site_name in ['blackboard', 'bb']:
-            self.__open_site("BlackBoard", "https://my.ltu.edu", skill_input.verbose)
-        elif site_name in ['library', 'ltu library']:
-            self.__open_site("the LTU Library homepage", "https://www.ltu.edu/library", skill_input.verbose)
-        elif site_name in ['help desk', 'helpdesk', 'tech support', 'ehelp']:
-            self.__open_site("the LTU eHelp homepage", "http://www.ltu.edu/ehelp/", skill_input.verbose)
-        elif site_name in ['password', 'mypassword']:
-            self.__open_site("MyPassword web service", "https://mypassword.campus.ltu.edu/", skill_input.verbose)
-        elif site_name in ['ltu.edu', 'ltu website', 'ltu homepage']:
-            self.__open_site("the main LTU website", "http://www.ltu.edu", skill_input.verbose)
-        elif site_name in ['email', 'webmail', 'mail', 'gmail']:
-            self.__open_site("Gmail", "https://gmail.com", skill_input.verbose)
-        elif site_name in ['calendar', 'schedule', 'events']:
-            self.__open_site("Google Calendar", "https://calendar.google.com", skill_input.verbose)
-        elif site_name in ['ltu events', 'ltu event']:
-            self.__open_site("ltu events", "http://www.ltu.edu/myltu/calendar.asp", skill_input.verbose)
+        requested_site_name = verb_object.lower()
+        site_name = ""
+        site_url = ""
+        if requested_site_name in ['bannerweb', 'banner', 'registration', 'financial aid']:
+            site_name = "BannerWeb"
+            site_url = "https://www.ltu.edu/bannerweb"
+        elif requested_site_name in ['blackboard', 'bb']:
+            site_name = "BlackBoard"
+            site_url = "https://my.ltu.edu"
+        elif requested_site_name in ['library', 'ltu library']:
+            site_name = "the LTU Library homepage"
+            site_url = "https://www.ltu.edu/library"
+        elif requested_site_name in ['help desk', 'helpdesk', 'tech support', 'ehelp']:
+            site_name = "the LTU eHelp homepage"
+            site_url = "http://www.ltu.edu/ehelp/"
+        elif requested_site_name in ['password', 'mypassword']:
+            site_name = "MyPassword web service"
+            site_url = "https://mypassword.campus.ltu.edu/"
+        elif requested_site_name in ['ltu.edu', 'ltu website', 'ltu homepage']:
+            site_name = "the main LTU website"
+            site_url = "http://www.ltu.edu"
+        elif requested_site_name in ['email', 'webmail', 'mail', 'gmail']:
+            site_name = "Gmail"
+            site_url = "https://gmail.com"
+        elif requested_site_name in ['calendar', 'schedule', 'events']:
+            site_name = "Google Calendar"
+            site_url = "https://calendar.google.com"
+        elif requested_site_name in ['ltu events', 'ltu event']:
+            site_name = "ltu events"
+            site_url = "http://www.ltu.edu/myltu/calendar.asp"
         else:
-            speaking.speak("I don't recognize the website you want to open.")
+            user_interaction_service.speak("I don't recognize the website you want to open.")
+            return
+        self.__open_site(site_name, site_url, user_interaction_service, skill_input.verbose)
     
-    def __open_site(self, site_name: str, site_url: str, verbose: bool):
+    def __open_site(self, site_name: str, site_url: str, user_interaction_service: UserInteractionServiceBase, verbose: bool):
         """Announces opening a site and then actually opens it."""
-        speaking.speak(f"Opening {site_name}...", verbose)
+        user_interaction_service.speak(f"Opening {site_name}...", verbose)
         webbrowser.open(site_url)
