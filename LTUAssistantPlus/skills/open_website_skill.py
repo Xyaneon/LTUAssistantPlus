@@ -3,7 +3,7 @@
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.speaking_service_base import SpeakingServiceBase
+from user_interface.user_interaction_service_base import UserInteractionServiceBase
 from .skill import SkillInput, Skill
 
 class OpenWebsiteSkill(Skill):
@@ -18,11 +18,11 @@ class OpenWebsiteSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
+    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.dependencies.noun or skill_input.dependencies.propn
         if verb_object is None:
-            speak_service.speak("I couldn't understand what website you want to open.")
+            user_interaction_service.speak("I couldn't understand what website you want to open.")
             return
         requested_site_name = verb_object.lower()
         site_name = ""
@@ -55,11 +55,11 @@ class OpenWebsiteSkill(Skill):
             site_name = "ltu events"
             site_url = "http://www.ltu.edu/myltu/calendar.asp"
         else:
-            speak_service.speak("I don't recognize the website you want to open.")
+            user_interaction_service.speak("I don't recognize the website you want to open.")
             return
-        self.__open_site(site_name, site_url, speak_service, skill_input.verbose)
+        self.__open_site(site_name, site_url, user_interaction_service, skill_input.verbose)
     
-    def __open_site(self, site_name: str, site_url: str, speak_service: SpeakingServiceBase, verbose: bool):
+    def __open_site(self, site_name: str, site_url: str, user_interaction_service: UserInteractionServiceBase, verbose: bool):
         """Announces opening a site and then actually opens it."""
-        speak_service.speak(f"Opening {site_name}...", verbose)
+        user_interaction_service.speak(f"Opening {site_name}...", verbose)
         webbrowser.open(site_url)

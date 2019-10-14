@@ -4,7 +4,7 @@ import argparse
 import sys
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.speaking_service_base import SpeakingServiceBase
+from user_interface.user_interaction_service_base import UserInteractionServiceBase
 
 from skills.skill import SkillInput, Skill
 from skills.open_website_skill import OpenWebsiteSkill
@@ -19,7 +19,7 @@ from skills.change_user_name_skill import ChangeUserNameSkill
 
 from typing import Optional
 
-def identify_and_run_command(ud: ParsedUniversalDependencies, speak_service: SpeakingServiceBase, verbose: bool = False) -> bool:
+def identify_and_run_command(ud: ParsedUniversalDependencies, user_interaction_service: UserInteractionServiceBase, verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is
     understood, and False otherwise."""
     skill_input = SkillInput(ud, verbose)
@@ -32,7 +32,7 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, speak_service: Spe
 
     skill = _select_skill_for_input(skill_input)
     if skill is not None:
-        skill.execute_for_command(skill_input, speak_service)
+        skill.execute_for_command(skill_input, user_interaction_service)
         return True
     return False
 

@@ -3,7 +3,7 @@
 import calendardb
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.speaking_service_base import SpeakingServiceBase
+from user_interface.user_interaction_service_base import UserInteractionServiceBase
 from .skill import SkillInput, Skill
 
 class TellScheduleSkill(Skill):
@@ -19,7 +19,7 @@ class TellScheduleSkill(Skill):
         verb_object = (skill_input.verb_object or None) and skill_input.verb_object.lower()
         return verb in self._cmd_list and verb_object == "schedule"
     
-    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
+    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
         """Executes this skill on the given command input."""
         event_list = calendardb.get_todays_events()
         if len(event_list) < 1:
@@ -40,4 +40,4 @@ class TellScheduleSkill(Skill):
                                         event.start_time_str]) + ', '
             output_str += ' '.join(['and', event_list[-1].event_str, 'at',
                                     event_list[-1].start_time_str]) + '.'
-        speak_service.speak(output_str, skill_input.verbose)
+        user_interaction_service.speak(output_str, skill_input.verbose)

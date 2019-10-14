@@ -3,7 +3,7 @@
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.speaking_service_base import SpeakingServiceBase
+from user_interface.user_interaction_service_base import UserInteractionServiceBase
 from .skill import SkillInput, Skill
 
 class SendEmailSkill(Skill):
@@ -18,7 +18,7 @@ class SendEmailSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput, speak_service: SpeakingServiceBase):
+    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.noun
         recipient_info = verb_object
@@ -26,5 +26,5 @@ class SendEmailSkill(Skill):
             recipient = 'mailto:' + recipient_info  # Open default email client
         else:
             recipient = 'https://mail.google.com/mail/u/0/#compose' # Gmail
-        speak_service.speak('Composing an email...', skill_input.verbose)
+        user_interaction_service.speak('Composing an email...', skill_input.verbose)
         webbrowser.open(recipient)
