@@ -1,0 +1,29 @@
+astroid==2.2.5
+certifi==2019.9.11
+chardet==3.0.4
+colorama==0.4.1
+idna==2.8
+isort==4.3.21
+lazy-object-proxy==1.4.2
+mccabe==0.6.1
+numpy==1.17.2
+protobuf==3.9.1
+PyAudio==0.2.11
+pylint==2.3.1
+pypiwin32==223; platform_system == "Windows"
+pywin32==224; platform_system == "Windows"
+requests==2.22.0
+rope==0.14.0
+six==1.12.0
+SpeechRecognition==3.8.1
+
+# The following will install the correct version of PyTorch needed by stanfordnlp
+https://download.pytorch.org/whl/cpu/torch-1.0.1-cp36-cp36m-win_amd64.whl; platform_system == "Windows"
+https://download.pytorch.org/whl/cpu/torch-1.0.1.post2-cp36-cp36m-linux_x86_64.whl; platform_system == "Linux"
+
+stanfordnlp==0.2.0
+tqdm==4.35.0
+typed-ast==1.4.0
+urllib3==1.25.3
+win10toast==0.9; platform_system == "Windows"
+wrapt==1.11.2
