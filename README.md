@@ -24,9 +24,8 @@ python -m pip install -r requirements.txt
 
 LTUAssistantPlus has direct dependencies on the following packages:
 - [PyAudio][PyAudio]
-- [PyTorch][PyTorch]
+- [spaCy][spaCy]
 - [SpeechRecognition][SpeechRecognition]
-- [StanfordNLP][stanfordnlp]
 - [win10toast][win10toast]
 
 See the `requirements.txt` file for a complete listing of needed packages.
@@ -74,8 +73,7 @@ License notices for third-party software libraries this project uses are listed 
 [license]: https://github.com/Xyaneon/LTUAssistantPlus/blob/master/LICENSE
 [LTUAssistant]: https://github.com/Xyaneon/LTUAssistant
 [PyAudio]: http://people.csail.mit.edu/hubert/pyaudio/
-[PyTorch]: https://pytorch.org/
+[spaCy]: https://spacy.io/
 [SpeechRecognition]: https://pypi.org/project/SpeechRecognition/
-[stanfordnlp]: https://stanfordnlp.github.io/stanfordnlp/
 [third-party notices]: https://github.com/Xyaneon/LTUAssistantPlus/blob/master/THIRD_PARTY_NOTICES.txt
 [win10toast]: https://github.com/jithurjacob/Windows-10-Toast-Notifications
