@@ -38,22 +38,14 @@ After all package dependencies have been set up, run the following from the top-
 python .\LTUAssistantPlus\LTUAssistant.py
 ```
 
-> **NOTE:**
->
-> If this is the first time you are running the assistant, the neural network needed by the `stanfordnlp`
-> package to run will be automatically downloaded. Be aware this download is about 235MB in size.
-> On subsequent runs, the assistant should be ready right away.
->
-> The assistant's data will be stored in the `~/.LTUAssistant` directory on your computer.
-
 The assistant will greet you after the NLP pipeline initializes. Once you see the phrase
 `Say something!` in the terminal, you may speak your command and wait for the assistant to
 process it.
 
-> **NOTE:**
->
-> Currently, the assistant can only process one command per session. To have it execute
-> another command, you need to restart the script.
+**Notes:**
+- Currently, the assistant can only process one command per session. To have it execute another command,
+  you need to restart the script.
+- The assistant's data will be stored in the `~/.LTUAssistant` directory on your computer.
 
 ## Testing
 
