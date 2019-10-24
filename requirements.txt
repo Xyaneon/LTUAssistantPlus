@@ -11,7 +11,7 @@ PyAudio==0.2.11
 pypiwin32==223; platform_system == "Windows"
 pywin32==225; platform_system == "Windows"
 requests==2.22.0
-spacy==2.2.1
+spacy>=2.2.0,<3.0.0
 SpeechRecognition==3.8.1
 srsly==0.1.0
 thinc==7.1.1
@@ -21,4 +21,4 @@ wasabi==0.2.2
 win10toast==0.9; platform_system == "Windows"
 
 # Install model for spaCy
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.0/en_core_web_sm-2.2.0.tar.gz
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.0/en_core_web_sm-2.2.0.tar.gz#egg=en_core_web_sm
