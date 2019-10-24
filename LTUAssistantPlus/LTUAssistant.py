@@ -22,11 +22,11 @@ def process_command(interaction_service: UserInteractionServiceBase, optional_me
     else:
         (success, sentence) = interaction_service.greet_user_and_ask_for_command(settings.username.capitalize())
         if not success:
-            interaction_service.tell_user_could_not_be_heard(speak_service)
+            interaction_service.tell_user_could_not_be_heard()
             return
     ud = Parse(sentence)
     if not assistantdb.identify_and_run_command(ud, interaction_service):
-        interaction_service.tell_user_command_was_not_understood(speak_service)
+        interaction_service.tell_user_command_was_not_understood()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
