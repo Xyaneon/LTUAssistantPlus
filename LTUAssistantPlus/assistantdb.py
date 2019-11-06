@@ -7,6 +7,7 @@ from nlp.universal_dependencies import ParsedUniversalDependencies
 from user_interface.user_interaction_service_base import UserInteractionServiceBase
 
 from skills.skill import SkillInput, Skill
+from skills.faq_skill import FAQSkill
 from skills.open_website_skill import OpenWebsiteSkill
 from skills.send_email_skill import SendEmailSkill
 from skills.room_finder_skill import RoomFinderSkill
@@ -42,6 +43,7 @@ def _select_skill_for_input(skill_input: SkillInput) -> Optional[Skill]:
     Alternatively, `None` is returned if there is no suitable `Skill` found.
     """
     available_skills = [
+        FAQSkill(),
         OpenWebsiteSkill(),
         SendEmailSkill(),
         RoomFinderSkill(),
