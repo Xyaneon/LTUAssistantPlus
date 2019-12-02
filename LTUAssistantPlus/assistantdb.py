@@ -7,16 +7,7 @@ from nlp.universal_dependencies import ParsedUniversalDependencies
 from user_interface.user_interaction_service_base import UserInteractionServiceBase
 
 from skills.skill import SkillInput, Skill
-from skills.faq_skill import FAQSkill
-from skills.open_website_skill import OpenWebsiteSkill
-from skills.send_email_skill import SendEmailSkill
-from skills.room_finder_skill import RoomFinderSkill
-from skills.add_calendar_event_skill import AddCalendarEventSkill
-from skills.tell_schedule_skill import TellScheduleSkill
-from skills.tell_date_skill import TellDateSkill
-from skills.tell_time_skill import TellTimeSkill
-from skills.change_assistant_voice_skill import ChangeAssistantVoiceSkill
-from skills.change_user_name_skill import ChangeUserNameSkill
+from skills import available_skills
 
 from typing import Optional
 
@@ -42,17 +33,6 @@ def _select_skill_for_input(skill_input: SkillInput) -> Optional[Skill]:
     Selects a `Skill` which can process the given `SkillInput` and returns it.
     Alternatively, `None` is returned if there is no suitable `Skill` found.
     """
-    available_skills = [
-        FAQSkill(),
-        OpenWebsiteSkill(),
-        SendEmailSkill(),
-        RoomFinderSkill(),
-        AddCalendarEventSkill(),
-        TellScheduleSkill(),
-        TellDateSkill(),
-        TellTimeSkill(),
-        ChangeAssistantVoiceSkill(),
-        ChangeUserNameSkill()]
     for available_skill in available_skills:
         if available_skill.matches_command(skill_input):
             return available_skill
