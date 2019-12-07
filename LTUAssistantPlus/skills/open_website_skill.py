@@ -59,6 +59,10 @@ class OpenWebsiteSkill(Skill):
             return
         self.__open_site(site_name, site_url, user_interaction_service, skill_input.verbose)
     
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass
+    
     def __open_site(self, site_name: str, site_url: str, user_interaction_service: UserInteractionServiceBase, verbose: bool):
         """Announces opening a site and then actually opens it."""
         user_interaction_service.speak(f"Opening {site_name}...", verbose)

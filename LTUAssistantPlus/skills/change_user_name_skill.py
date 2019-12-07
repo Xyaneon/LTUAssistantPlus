@@ -29,3 +29,7 @@ class ChangeUserNameSkill(Skill):
             return True
         else:
             return False
+    
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass

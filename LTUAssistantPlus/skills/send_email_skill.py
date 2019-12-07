@@ -28,3 +28,7 @@ class SendEmailSkill(Skill):
             recipient = 'https://mail.google.com/mail/u/0/#compose' # Gmail
         user_interaction_service.speak('Composing an email...', skill_input.verbose)
         webbrowser.open(recipient)
+    
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass

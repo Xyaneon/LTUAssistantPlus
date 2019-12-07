@@ -27,3 +27,7 @@ class ChangeAssistantVoiceSkill(Skill):
             user_interaction_service.speak('Okay, I will use a %s voice from now on.' % (voice), True)
         else:
             user_interaction_service.speak('I don\'t understand what voice you want')
+    
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass
