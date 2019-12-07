@@ -30,3 +30,8 @@ class Skill(ABC):
     def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
         """Executes this skill on the given command input."""
         pass
+
+    @abstractmethod
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass
