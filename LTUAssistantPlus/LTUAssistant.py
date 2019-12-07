@@ -4,7 +4,7 @@ import argparse
 import re
 import sys
 import settings
-import assistantdb
+import skill_selection
 from nlp.natural_language_processing import Parse
 from user_interface.listening_service_base import ListeningServiceBase
 from user_interface.listening_service import ListeningService
@@ -25,7 +25,7 @@ def process_command(interaction_service: UserInteractionServiceBase, optional_me
             interaction_service.tell_user_could_not_be_heard()
             return
     ud = Parse(sentence)
-    if not assistantdb.identify_and_run_command(ud, interaction_service):
+    if not skill_selection.identify_and_run_command(ud, interaction_service):
         interaction_service.tell_user_command_was_not_understood()
 
 if __name__ == "__main__":
