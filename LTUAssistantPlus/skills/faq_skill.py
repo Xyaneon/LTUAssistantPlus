@@ -26,4 +26,4 @@ class FAQSkill(Skill):
     def perform_setup(self):
         """Executes any setup work necessary for this skill before it can be used."""
         # TODO: Perform web crawling and database setup here.
-        pass
+        raise NotImplementedError("The FAQSkill setup has not been implemented yet.")
