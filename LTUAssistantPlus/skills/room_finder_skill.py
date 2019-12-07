@@ -55,3 +55,7 @@ class RoomFinderSkill(Skill):
         else:
             finder_message = 'Sorry, but I don\'t think you told me which room you want.'
         user_interaction_service.speak(finder_message, skill_input.verbose)
+    
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass

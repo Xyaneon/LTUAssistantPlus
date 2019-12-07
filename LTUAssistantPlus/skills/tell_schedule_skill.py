@@ -41,3 +41,7 @@ class TellScheduleSkill(Skill):
             output_str += ' '.join(['and', event_list[-1].event_str, 'at',
                                     event_list[-1].start_time_str]) + '.'
         user_interaction_service.speak(output_str, skill_input.verbose)
+    
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass

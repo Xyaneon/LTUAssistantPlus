@@ -22,3 +22,8 @@ class FAQSkill(Skill):
         """Executes this skill on the given command input."""
         # TODO
         pass
+
+    def perform_setup(self):
+        """Executes any setup work necessary for this skill before it can be used."""
+        # TODO: Perform web crawling and database setup here.
+        pass
