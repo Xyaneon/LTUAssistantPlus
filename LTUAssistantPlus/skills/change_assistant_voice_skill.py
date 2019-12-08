@@ -22,6 +22,7 @@ class ChangeAssistantVoiceSkill(Skill):
         voice = adjective
         if voice in ("female", "male"):
             services.settings_service.set_voice(voice)
+            services.settings_service.save_settings()
             services.user_interaction_service.speak('Okay, I will use a %s voice from now on.' % (voice), True)
         else:
             services.user_interaction_service.speak('I don\'t understand what voice you want')

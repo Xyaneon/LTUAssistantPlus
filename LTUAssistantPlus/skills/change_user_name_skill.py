@@ -23,6 +23,7 @@ class ChangeUserNameSkill(Skill):
         new_name = alternate_noun or verb_object
         if new_name:
             services.settings_service.set_username(new_name)
+            services.settings_service.save_settings()
             services.user_interaction_service.speak(f"Pleased to meet you, {services.settings_service.username}!", True)
             return True
         else:
