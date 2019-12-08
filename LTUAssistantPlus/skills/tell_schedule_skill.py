@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import calendardb
-
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from services.assistant_services import AssistantServices
 from .skill import SkillInput, Skill
@@ -21,7 +19,7 @@ class TellScheduleSkill(Skill):
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServices):
         """Executes this skill on the given command input."""
-        event_list = calendardb.get_todays_events()
+        event_list = services.calendar_service.get_todays_events()
         if len(event_list) < 1:
             output_str = 'There are no events currently scheduled.'
         elif len(event_list) == 1:

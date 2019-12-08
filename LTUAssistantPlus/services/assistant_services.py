@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from services.calendar_service import CalendarService
 from services.settings_service import SettingsService
 from services.user_interface.listening_service_base import ListeningServiceBase
 from services.user_interface.listening_service import ListeningService
@@ -16,10 +17,16 @@ class AssistantServices():
     def __init__(self, text_only_mode: bool):
         """Initializes a new instance of the `AssistantServices` class."""
         self.__settings_service = SettingsService()
+        self.__calendar_service = CalendarService()
         self.__notification_service = NotificationService()
         self.__speak_service = SpeakingService(self.__notification_service, self.__settings_service, text_only_mode)
         self.__listen_service = ListeningService(text_only_mode)
         self.__interaction_service = UserInteractionService(self.__speak_service, self.__listen_service)
+    
+    @property
+    def calendar_service(self) -> CalendarService:
+        """The calendar service."""
+        return self.__calendar_service
     
     @property
     def settings_service(self) -> SettingsService:

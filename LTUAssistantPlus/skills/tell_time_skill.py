@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import calendardb
-
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from services.assistant_services import AssistantServices
 from .skill import SkillInput, Skill
@@ -21,7 +19,7 @@ class TellTimeSkill(Skill):
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServices):
         """Executes this skill on the given command input."""
-        services.user_interaction_service.speak(f"It is currently {calendardb.get_current_time()}.", True)
+        services.user_interaction_service.speak(f"It is currently {services.calendar_service.get_current_time()}.", True)
     
     def perform_setup(self):
         """Executes any setup work necessary for this skill before it can be used."""
