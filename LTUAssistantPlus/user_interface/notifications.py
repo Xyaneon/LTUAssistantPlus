@@ -13,7 +13,7 @@ elif platform_string == "Windows":
     toaster = ToastNotifier()
 
 def show_notification(message, also_cmd=False):
-    '''Show spoken words from the assistant as a notification.'''
+    """Show spoken words from the assistant as a notification."""
     if platform_string == "Linux":
         try:
             notification = notify2.Notification('LTU Assistant',
