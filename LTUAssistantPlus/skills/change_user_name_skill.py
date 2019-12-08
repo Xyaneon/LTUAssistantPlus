@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import settings
+import settings_service
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from user_interface.user_interaction_service_base import UserInteractionServiceBase
@@ -24,8 +24,8 @@ class ChangeUserNameSkill(Skill):
         alternate_noun = skill_input.noun # TODO: Actually get the correct alternate noun.
         new_name = alternate_noun or verb_object
         if new_name:
-            settings.set_username(new_name)
-            user_interaction_service.speak(f"Pleased to meet you, {settings.username}!", True)
+            settings_service.set_username(new_name)
+            user_interaction_service.speak(f"Pleased to meet you, {settings_service.username}!", True)
             return True
         else:
             return False

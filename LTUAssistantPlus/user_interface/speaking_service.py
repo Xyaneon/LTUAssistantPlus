@@ -2,7 +2,7 @@
 
 import user_interface.notification_service
 import platform
-import settings
+import settings_service
 import subprocess
 from user_interface.notification_service_base import NotificationServiceBase
 from user_interface.speaking_service_base import SpeakingServiceBase
@@ -34,12 +34,13 @@ class SpeakingService(SpeakingServiceBase):
 
     def __say_in_notification(self, message: str, also_cmd: bool):
         """Shows the spoken message in a system notification."""
-        self._notification_service.show_notification(message, also_cmd)
+        if self._notification_service is not None:
+            self._notification_service.show_notification(message, also_cmd)
 
     def __say_via_audio(self, message: str):
         """Says the spoken message via system audio."""
         if self._platform_string == "Linux":
-            if settings.voice == 'female':
+            if settings_service.voice == 'female':
                 # Speak using a female voice
                 subprocess.call('espeak -v+f1 "' + message + '"', shell=True)
             else:
@@ -50,5 +51,5 @@ class SpeakingService(SpeakingServiceBase):
             self._winspeak.speak(message)
 
 if __name__ == "__main__":
-    service = SpeakingService(False)
+    service = SpeakingService(None, False)
     service.speak("This is a test message from LTU Assistant.", True)

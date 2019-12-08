@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import settings
+import settings_service
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from user_interface.user_interaction_service_base import UserInteractionServiceBase
@@ -23,7 +23,7 @@ class ChangeAssistantVoiceSkill(Skill):
         adjective = skill_input.adj.lower()
         voice = adjective
         if voice in ("female", "male"):
-            settings.set_voice(voice)
+            settings_service.set_voice(voice)
             user_interaction_service.speak('Okay, I will use a %s voice from now on.' % (voice), True)
         else:
             user_interaction_service.speak('I don\'t understand what voice you want')

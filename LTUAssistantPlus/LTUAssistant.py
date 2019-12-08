@@ -3,7 +3,7 @@
 import argparse
 import re
 import sys
-import settings
+import settings_service
 import skill_selection
 from nlp.natural_language_processing import Parse
 from user_interface.listening_service_base import ListeningServiceBase
@@ -22,7 +22,7 @@ def process_command(interaction_service: UserInteractionServiceBase, optional_me
         sentence = optional_message
         print(f"Text input provided: {optional_message}")
     else:
-        (success, sentence) = interaction_service.greet_user_and_ask_for_command(settings.username.capitalize())
+        (success, sentence) = interaction_service.greet_user_and_ask_for_command(settings_service.username.capitalize())
         if not success:
             interaction_service.tell_user_could_not_be_heard()
             return

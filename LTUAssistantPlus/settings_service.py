@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-import configparser, os
+import configparser
+import os
 
 # Initialize INI file path
 app_data_folder = os.path.join(os.path.expanduser('~'), '.LTUAssistant')
