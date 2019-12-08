@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-from services.calendar_service import CalendarService
+from services.calendar.calendar_service_base import CalendarServiceBase
+from services.calendar.calendar_service import CalendarService
 from services.settings_service import SettingsService
 from services.user_interface.listening_service_base import ListeningServiceBase
 from services.user_interface.listening_service import ListeningService
@@ -24,7 +25,7 @@ class AssistantServices():
         self.__interaction_service = UserInteractionService(self.__speak_service, self.__listen_service)
     
     @property
-    def calendar_service(self) -> CalendarService:
+    def calendar_service(self) -> CalendarServiceBase:
         """The calendar service."""
         return self.__calendar_service
     

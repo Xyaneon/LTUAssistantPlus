@@ -2,7 +2,7 @@
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
 from services.assistant_services import AssistantServices
-from services.calendar_service import CalendarEvent
+from services.calendar.calendar_event import CalendarEvent
 from .skill import SkillInput, Skill
 
 class AddCalendarEventSkill(Skill):
