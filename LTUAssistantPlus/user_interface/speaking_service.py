@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import user_interface.notifications
+import user_interface.notification_service
 import platform
 import settings
 import subprocess
@@ -32,7 +32,7 @@ class SpeakingService(SpeakingServiceBase):
 
     def __say_in_notification(self, message: str, also_cmd: bool):
         """Shows the spoken message in a system notification."""
-        user_interface.notifications.show_notification(message, also_cmd)
+        user_interface.notification_service.show_notification(message, also_cmd)
 
     def __say_via_audio(self, message: str):
         """Says the spoken message via system audio."""
