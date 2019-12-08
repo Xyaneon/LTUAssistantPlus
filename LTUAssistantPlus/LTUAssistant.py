@@ -8,6 +8,8 @@ import skill_selection
 from nlp.natural_language_processing import Parse
 from user_interface.listening_service_base import ListeningServiceBase
 from user_interface.listening_service import ListeningService
+from user_interface.notification_service_base import NotificationServiceBase
+from user_interface.notification_service import NotificationService
 from user_interface.speaking_service_base import SpeakingServiceBase
 from user_interface.speaking_service import SpeakingService
 from user_interface.user_interaction_service_base import UserInteractionServiceBase
@@ -38,7 +40,8 @@ if __name__ == "__main__":
                         type=str)
     args = parser.parse_args()
     
-    speak_service = SpeakingService(args.text_only_mode)
+    notification_service = NotificationService()
+    speak_service = SpeakingService(notification_service, args.text_only_mode)
     listen_service = ListeningService(args.text_only_mode)
     interaction_service = UserInteractionService(speak_service, listen_service)
 
