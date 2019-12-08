@@ -2,6 +2,7 @@
 
 from services.calendar.calendar_service_base import CalendarServiceBase
 from services.calendar.calendar_service import CalendarService
+from services.settings_service_base import SettingsServiceBase
 from services.settings_service import SettingsService
 from services.user_interface.listening_service_base import ListeningServiceBase
 from services.user_interface.listening_service import ListeningService
@@ -30,7 +31,7 @@ class AssistantServices():
         return self.__calendar_service
     
     @property
-    def settings_service(self) -> SettingsService:
+    def settings_service(self) -> SettingsServiceBase:
         """The settings service."""
         return self.__settings_service
     

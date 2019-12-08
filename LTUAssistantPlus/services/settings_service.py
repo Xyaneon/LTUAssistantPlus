@@ -3,7 +3,9 @@
 import configparser
 import os
 
-class SettingsService():
+from services.settings_service_base import SettingsServiceBase
+
+class SettingsService(SettingsServiceBase):
     """Provides access to the assistant's settings."""
 
     def __init__(self):
