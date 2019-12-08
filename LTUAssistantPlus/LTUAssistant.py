@@ -5,9 +5,10 @@ import re
 import sys
 import skill_selection
 from nlp.natural_language_processing import Parse
+from services.assistant_services_base import AssistantServicesBase
 from services.assistant_services import AssistantServices
 
-def process_command(services: AssistantServices, optional_message: str = None):
+def process_command(services: AssistantServicesBase, optional_message: str = None):
     """Processes a command, either supplied as a parameter or obtained from
     user interaction."""
     if optional_message:

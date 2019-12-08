@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from services.assistant_services import AssistantServices
+from services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
 
 class ChangeAssistantVoiceSkill(Skill):
@@ -16,7 +16,7 @@ class ChangeAssistantVoiceSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput, services: AssistantServices):
+    def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
         adjective = skill_input.adj.lower()
         voice = adjective

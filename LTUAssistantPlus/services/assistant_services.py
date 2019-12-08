@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from services.assistant_services_base import AssistantServicesBase
 from services.calendar.calendar_service_base import CalendarServiceBase
 from services.calendar.calendar_service import CalendarService
 from services.settings_service_base import SettingsServiceBase
@@ -13,7 +14,7 @@ from services.user_interface.speaking_service import SpeakingService
 from services.user_interface.user_interaction_service_base import UserInteractionServiceBase
 from services.user_interface.user_interaction_service import UserInteractionService
 
-class AssistantServices():
+class AssistantServices(AssistantServicesBase):
     """Makes various services provided by the assistant available for use by skills."""
 
     def __init__(self, text_only_mode: bool):

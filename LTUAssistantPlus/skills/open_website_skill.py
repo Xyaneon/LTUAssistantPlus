@@ -3,7 +3,7 @@
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from services.assistant_services import AssistantServices
+from services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
 
 class OpenWebsiteSkill(Skill):
@@ -18,7 +18,7 @@ class OpenWebsiteSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput, services: AssistantServices):
+    def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.dependencies.noun or skill_input.dependencies.propn
         if verb_object is None:
@@ -63,7 +63,7 @@ class OpenWebsiteSkill(Skill):
         """Executes any setup work necessary for this skill before it can be used."""
         pass
     
-    def __open_site(self, site_name: str, site_url: str, services: AssistantServices, verbose: bool):
+    def __open_site(self, site_name: str, site_url: str, services: AssistantServicesBase, verbose: bool):
         """Announces opening a site and then actually opens it."""
         services.user_interaction_service.speak(f"Opening {site_name}...", verbose)
         webbrowser.open(site_url)
