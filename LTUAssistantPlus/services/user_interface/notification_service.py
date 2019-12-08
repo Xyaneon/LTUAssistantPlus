@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import platform
-from user_interface.notification_service_base import NotificationServiceBase
+from services.user_interface.notification_service_base import NotificationServiceBase
 
 platform_string = platform.system()
 

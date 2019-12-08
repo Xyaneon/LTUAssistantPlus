@@ -4,14 +4,14 @@ import argparse
 import sys
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.user_interaction_service_base import UserInteractionServiceBase
+from services.assistant_services import AssistantServices
 
 from skills.skill import SkillInput, Skill
 from skills import available_skills
 
 from typing import Optional
 
-def identify_and_run_command(ud: ParsedUniversalDependencies, user_interaction_service: UserInteractionServiceBase, verbose: bool = False) -> bool:
+def identify_and_run_command(ud: ParsedUniversalDependencies, services: AssistantServices, verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is
     understood, and False otherwise."""
     skill_input = SkillInput(ud, verbose)
@@ -24,7 +24,7 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, user_interaction_s
 
     skill = _select_skill_for_input(skill_input)
     if skill is not None:
-        skill.execute_for_command(skill_input, user_interaction_service)
+        skill.execute_for_command(skill_input, services)
         return True
     return False
 
@@ -50,5 +50,5 @@ if __name__ == '__main__':
     if args.verbose:
         print(sys.version)
     ud = ParsedUniversalDependencies(verb = args.verb, noun = args.verb_object)
-    identify_and_run_command(ud, args.verbose)
+    identify_and_run_command(ud, None, args.verbose)
     exit()

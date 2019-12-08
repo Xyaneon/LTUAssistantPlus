@@ -1,16 +1,15 @@
 #!/usr/bin/python3
 
-import user_interface.notification_service
 import platform
-import settings_service
 import subprocess
-from user_interface.notification_service_base import NotificationServiceBase
-from user_interface.speaking_service_base import SpeakingServiceBase
+from services.settings_service import SettingsService
+from services.user_interface.notification_service_base import NotificationServiceBase
+from services.user_interface.speaking_service_base import SpeakingServiceBase
 
 class SpeakingService(SpeakingServiceBase):
     """Provides speaking services."""
 
-    def __init__(self, notification_service: NotificationServiceBase, text_only_mode: bool):
+    def __init__(self, notification_service: NotificationServiceBase, settings_service: SettingsService, text_only_mode: bool):
         """Initializes a new instance of the `SpeakingService` class."""
         self.text_only_mode = text_only_mode
         # Initialize private members for platform-specific dependencies
@@ -19,6 +18,7 @@ class SpeakingService(SpeakingServiceBase):
             from win32com.client import Dispatch
             self._winspeak = Dispatch("SAPI.SpVoice")
         self._notification_service = notification_service
+        self._settings_service = settings_service
     
     def speak(self, message: str, also_cmd: bool = False):
         """Speak the given message using the text-to-speech backend."""
@@ -40,7 +40,7 @@ class SpeakingService(SpeakingServiceBase):
     def __say_via_audio(self, message: str):
         """Says the spoken message via system audio."""
         if self._platform_string == "Linux":
-            if settings_service.voice == 'female':
+            if self._settings_service.voice == 'female':
                 # Speak using a female voice
                 subprocess.call('espeak -v+f1 "' + message + '"', shell=True)
             else:
@@ -51,5 +51,5 @@ class SpeakingService(SpeakingServiceBase):
             self._winspeak.speak(message)
 
 if __name__ == "__main__":
-    service = SpeakingService(None, False)
+    service = SpeakingService(None, None, False)
     service.speak("This is a test message from LTU Assistant.", True)

@@ -5,7 +5,7 @@
 import speech_recognition as sr
 import subprocess
 
-from user_interface.listening_service_base import ListeningServiceBase
+from services.user_interface.listening_service_base import ListeningServiceBase
 from typing import Tuple
 
 class ListeningService(ListeningServiceBase):

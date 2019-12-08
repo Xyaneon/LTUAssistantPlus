@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 
-import settings_service
-
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.user_interaction_service_base import UserInteractionServiceBase
+from services.assistant_services import AssistantServices
 from .skill import SkillInput, Skill
 
 class ChangeAssistantVoiceSkill(Skill):
@@ -18,15 +16,15 @@ class ChangeAssistantVoiceSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
+    def execute_for_command(self, skill_input: SkillInput, services: AssistantServices):
         """Executes this skill on the given command input."""
         adjective = skill_input.adj.lower()
         voice = adjective
         if voice in ("female", "male"):
-            settings_service.set_voice(voice)
-            user_interaction_service.speak('Okay, I will use a %s voice from now on.' % (voice), True)
+            services.settings_service.set_voice(voice)
+            services.user_interaction_service.speak('Okay, I will use a %s voice from now on.' % (voice), True)
         else:
-            user_interaction_service.speak('I don\'t understand what voice you want')
+            services.user_interaction_service.speak('I don\'t understand what voice you want')
     
     def perform_setup(self):
         """Executes any setup work necessary for this skill before it can be used."""
