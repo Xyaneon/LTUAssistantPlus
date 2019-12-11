@@ -47,8 +47,14 @@ class SpeakingService(SpeakingServiceBase):
                 # Default to male voice
                 subprocess.call('espeak "' + message + '"', shell=True)
         elif self._platform_string == "Windows":
-            # TODO: Respect voice configuration settings.
-            self._winspeak.speak(message)
+            voices = self._winspeak.GetVoices()
+            if self._settings_service.voice == 'female':
+                # Speak using a female voice
+                self._winspeak.Voice = voices.Item(1)
+            else:
+                # Default to male voice
+                self._winspeak.Voice = voices.Item(0)
+            self._winspeak.Speak(message)
 
 if __name__ == "__main__":
     service = SpeakingService(None, None, False)
