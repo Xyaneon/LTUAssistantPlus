@@ -18,10 +18,9 @@ class ChangeAssistantVoiceSkill(Skill):
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
-        adjective = skill_input.adj.lower()
-        voice = adjective
+        voice = skill_input.adjective.lower()
         if voice in ("female", "male"):
-            services.settings_service.set_voice(voice)
+            services.settings_service.voice = voice
             services.settings_service.save_settings()
             services.user_interaction_service.speak('Okay, I will use a %s voice from now on.' % (voice), True)
         else:
