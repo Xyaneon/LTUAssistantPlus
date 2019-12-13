@@ -32,6 +32,6 @@ class AddCalendarEventSkill(Skill):
         else:
             services.user_interaction_service.speak('Sorry, I am unable to help you schedule this right now.', skill_input.verbose)
     
-    def perform_setup(self):
+    def perform_setup(self, services):
         """Executes any setup work necessary for this skill before it can be used."""
         pass

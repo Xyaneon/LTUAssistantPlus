@@ -29,6 +29,6 @@ class SendEmailSkill(Skill):
         services.user_interaction_service.speak('Composing an email...', skill_input.verbose)
         webbrowser.open(recipient)
     
-    def perform_setup(self):
+    def perform_setup(self, services):
         """Executes any setup work necessary for this skill before it can be used."""
         pass

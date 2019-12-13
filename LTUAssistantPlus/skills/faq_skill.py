@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
-from nlp.universal_dependencies import ParsedUniversalDependencies
-from services.assistant_services_base import AssistantServicesBase
+from ..nlp.universal_dependencies import ParsedUniversalDependencies
+from ..services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
+
 
 class FAQSkill(Skill):
     """Lets the assistant answer FAQ questions for the user based on LTU website info."""
@@ -17,13 +18,16 @@ class FAQSkill(Skill):
         # TODO
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
-    
+
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
         # TODO
         pass
 
-    def perform_setup(self):
+    def perform_setup(self, services: AssistantServicesBase):
         """Executes any setup work necessary for this skill before it can be used."""
-        # TODO: Perform web crawling and database setup here.
-        raise NotImplementedError("The FAQSkill setup has not been implemented yet.")
+        if not services.settings_service.faq_initialized:
+            # TODO: Perform web crawling and database setup here.
+            raise NotImplementedError("The FAQSkill setup has not been implemented yet.")
+        else:
+            print("FAQ database already initialized.")

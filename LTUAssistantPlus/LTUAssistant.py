@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
 import argparse
-import re
-import sys
-import skill_selection
-from nlp.natural_language_processing import Parse
-from services.assistant_services_base import AssistantServicesBase
-from services.assistant_services import AssistantServices
+
+from LTUAssistantPlus import skill_selection
+from LTUAssistantPlus.nlp.natural_language_processing import Parse
+from LTUAssistantPlus.services.assistant_services import AssistantServices
+from LTUAssistantPlus.services.assistant_services_base import AssistantServicesBase
+from LTUAssistantPlus.skills import init_skills
+
 
 def process_command(services: AssistantServicesBase, optional_message: str = None):
     """Processes a command, either supplied as a parameter or obtained from
@@ -15,13 +16,15 @@ def process_command(services: AssistantServicesBase, optional_message: str = Non
         sentence = optional_message
         print(f"Text input provided: {optional_message}")
     else:
-        (success, sentence) = services.user_interaction_service.greet_user_and_ask_for_command(services.settings_service.username.capitalize())
+        (success, sentence) = services.user_interaction_service.greet_user_and_ask_for_command(
+            services.settings_service.username.capitalize())
         if not success:
             services.user_interaction_service.tell_user_could_not_be_heard()
             return
     ud = Parse(sentence)
     if not skill_selection.identify_and_run_command(ud, services):
         services.user_interaction_service.tell_user_command_was_not_understood()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -34,6 +37,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     services = AssistantServices(args.text_only_mode)
+    init_skills(services)
 
     if args.command_string:
         process_command(services, args.command_string)
