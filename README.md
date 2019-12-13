@@ -26,9 +26,8 @@ LTUAssistantPlus has direct dependencies on the following packages:
 - [beautifulsoup4][beautifulsoup4]
 - [Neo4j][Neo4j]
 - [PyAudio][PyAudio]
-- [PyTorch][PyTorch]
+- [spaCy][spaCy]
 - [SpeechRecognition][SpeechRecognition]
-- [StanfordNLP][stanfordnlp]
 - [win10toast][win10toast]
 
 See the `requirements.txt` file for a complete listing of needed packages.
@@ -41,22 +40,14 @@ After all package dependencies have been set up, run the following from the top-
 python .\LTUAssistantPlus\LTUAssistant.py
 ```
 
-> **NOTE:**
->
-> If this is the first time you are running the assistant, the neural network needed by the `stanfordnlp`
-> package to run will be automatically downloaded. Be aware this download is about 235MB in size.
-> On subsequent runs, the assistant should be ready right away.
->
-> The assistant's data will be stored in the `~/.LTUAssistant` directory on your computer.
-
 The assistant will greet you after the NLP pipeline initializes. Once you see the phrase
 `Say something!` in the terminal, you may speak your command and wait for the assistant to
 process it.
 
-> **NOTE:**
->
-> Currently, the assistant can only process one command per session. To have it execute
-> another command, you need to restart the script.
+**Notes:**
+- Currently, the assistant can only process one command per session. To have it execute another command,
+  you need to restart the script.
+- The assistant's data will be stored in the `~/.LTUAssistant` directory on your computer.
 
 ## Testing
 
@@ -78,8 +69,7 @@ License notices for third-party software libraries this project uses are listed 
 [LTUAssistant]: https://github.com/Xyaneon/LTUAssistant
 [Neo4j]: https://pypi.org/project/neo4j/
 [PyAudio]: http://people.csail.mit.edu/hubert/pyaudio/
-[PyTorch]: https://pytorch.org/
+[spaCy]: https://spacy.io/
 [SpeechRecognition]: https://pypi.org/project/SpeechRecognition/
-[stanfordnlp]: https://stanfordnlp.github.io/stanfordnlp/
 [third-party notices]: https://github.com/Xyaneon/LTUAssistantPlus/blob/master/THIRD_PARTY_NOTICES.txt
 [win10toast]: https://github.com/jithurjacob/Windows-10-Toast-Notifications

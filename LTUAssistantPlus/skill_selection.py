@@ -4,22 +4,14 @@ import argparse
 import sys
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.user_interaction_service_base import UserInteractionServiceBase
+from services.assistant_services_base import AssistantServicesBase
 
 from skills.skill import SkillInput, Skill
-from skills.open_website_skill import OpenWebsiteSkill
-from skills.send_email_skill import SendEmailSkill
-from skills.room_finder_skill import RoomFinderSkill
-from skills.add_calendar_event_skill import AddCalendarEventSkill
-from skills.tell_schedule_skill import TellScheduleSkill
-from skills.tell_date_skill import TellDateSkill
-from skills.tell_time_skill import TellTimeSkill
-from skills.change_assistant_voice_skill import ChangeAssistantVoiceSkill
-from skills.change_user_name_skill import ChangeUserNameSkill
+from skills import available_skills
 
 from typing import Optional
 
-def identify_and_run_command(ud: ParsedUniversalDependencies, user_interaction_service: UserInteractionServiceBase, verbose: bool = False) -> bool:
+def identify_and_run_command(ud: ParsedUniversalDependencies, services: AssistantServicesBase, verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is
     understood, and False otherwise."""
     skill_input = SkillInput(ud, verbose)
@@ -32,7 +24,7 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, user_interaction_s
 
     skill = _select_skill_for_input(skill_input)
     if skill is not None:
-        skill.execute_for_command(skill_input, user_interaction_service)
+        skill.execute_for_command(skill_input, services)
         return True
     return False
 
@@ -41,16 +33,6 @@ def _select_skill_for_input(skill_input: SkillInput) -> Optional[Skill]:
     Selects a `Skill` which can process the given `SkillInput` and returns it.
     Alternatively, `None` is returned if there is no suitable `Skill` found.
     """
-    available_skills = [
-        OpenWebsiteSkill(),
-        SendEmailSkill(),
-        RoomFinderSkill(),
-        AddCalendarEventSkill(),
-        TellScheduleSkill(),
-        TellDateSkill(),
-        TellTimeSkill(),
-        ChangeAssistantVoiceSkill(),
-        ChangeUserNameSkill()]
     for available_skill in available_skills:
         if available_skill.matches_command(skill_input):
             return available_skill
@@ -68,5 +50,5 @@ if __name__ == '__main__':
     if args.verbose:
         print(sys.version)
     ud = ParsedUniversalDependencies(verb = args.verb, noun = args.verb_object)
-    identify_and_run_command(ud, args.verbose)
+    identify_and_run_command(ud, None, args.verbose)
     exit()

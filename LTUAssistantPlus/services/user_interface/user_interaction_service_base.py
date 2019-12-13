@@ -2,8 +2,8 @@
 
 from abc import ABC, abstractmethod
 
-from user_interface.listening_service_base import ListeningServiceBase
-from user_interface.speaking_service_base import SpeakingServiceBase
+from services.user_interface.listening_service_base import ListeningServiceBase
+from services.user_interface.speaking_service_base import SpeakingServiceBase
 from typing import Tuple
 
 class UserInteractionServiceBase(ABC):

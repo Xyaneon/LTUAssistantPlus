@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
-from user_interface.listening_service_base import ListeningServiceBase
-from user_interface.speaking_service_base import SpeakingServiceBase
-from user_interface.user_interaction_service_base import UserInteractionServiceBase
+from services.user_interface.listening_service_base import ListeningServiceBase
+from services.user_interface.speaking_service_base import SpeakingServiceBase
+from services.user_interface.user_interaction_service_base import UserInteractionServiceBase
 from typing import Tuple
 
 class UserInteractionService(UserInteractionServiceBase):
