@@ -1,9 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
-# from neo4j import GraphDatabase
+from neo4j import GraphDatabase
 import re
 
-#driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "password"))
+driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "password"))
 
 
 def add_staff(tx, name, title, department, email, phone, office):
