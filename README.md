@@ -23,6 +23,8 @@ python -m pip install -r requirements.txt
 ### Dependencies
 
 LTUAssistantPlus has direct dependencies on the following packages:
+- [beautifulsoup4][beautifulsoup4]
+- [Neo4j][Neo4j]
 - [PyAudio][PyAudio]
 - [PyTorch][PyTorch]
 - [SpeechRecognition][SpeechRecognition]
@@ -71,8 +73,10 @@ This project is made available under the MIT license. Please see the [LICENSE][l
 
 License notices for third-party software libraries this project uses are listed in the [THIRD_PARTY_NOTICES.txt][third-party notices] file for reference.
 
+[beautifulsoup4]: https://pypi.org/project/beautifulsoup4/
 [license]: https://github.com/Xyaneon/LTUAssistantPlus/blob/master/LICENSE
 [LTUAssistant]: https://github.com/Xyaneon/LTUAssistant
+[Neo4j]: https://pypi.org/project/neo4j/
 [PyAudio]: http://people.csail.mit.edu/hubert/pyaudio/
 [PyTorch]: https://pytorch.org/
 [SpeechRecognition]: https://pypi.org/project/SpeechRecognition/
