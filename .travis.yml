@@ -23,7 +23,8 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
         - choco install python --version=3.6.8
-        - choco install jdk8 neo4j-community
+        - choco install jdk8
+        - choco install neo4j-community -version 3.5.1 -packageParameters "/HTTPEndpoint:127.0.0.1:7687"
         - python -m pip install --upgrade pip
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
       install:
