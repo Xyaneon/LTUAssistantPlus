@@ -12,7 +12,7 @@ matrix:
         - sudo wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
         - sudo echo 'deb https://debian.neo4j.org/repo stable/' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
         - sudo apt update
-        - sudo apt install neo4j
+        - sudo apt install neo4j cypher-shell=1.1.12
       install:
         - pip3 install -r requirements.txt
       script:
