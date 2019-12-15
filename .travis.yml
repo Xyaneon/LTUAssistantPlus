@@ -7,7 +7,8 @@ matrix:
       virtualenv:
         system_site_packages: true
       before_install:
-        - sudo apt install openjdk-8-jdk portaudio19-dev
+        - sudo apt-get install portaudio19-dev
+        - sudo apt-get install openjdk-8-jdk
         - sudo wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
         - sudo echo 'deb https://debian.neo4j.org/repo stable/' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
         - sudo apt update
@@ -22,7 +23,7 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
         - choco install python --version=3.6.8
-        - choco install jre8 neo4j-community
+        - choco install jdk8 neo4j-community
         - python -m pip install --upgrade pip
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
       install:
