@@ -2,11 +2,11 @@
 
 import argparse
 
-from LTUAssistantPlus import skill_selection
-from LTUAssistantPlus.nlp.natural_language_processing import Parse
-from LTUAssistantPlus.services.assistant_services import AssistantServices
-from LTUAssistantPlus.services.assistant_services_base import AssistantServicesBase
-from LTUAssistantPlus.skills import init_skills
+import skill_selection
+from nlp.natural_language_processing import Parse
+from services.assistant_services import AssistantServices
+from services.assistant_services_base import AssistantServicesBase
+from skills import init_skills
 
 
 def process_command(services: AssistantServicesBase, optional_message: str = None):

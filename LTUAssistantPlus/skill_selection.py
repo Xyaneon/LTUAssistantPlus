@@ -3,10 +3,10 @@
 import argparse
 import sys
 
-from LTUAssistantPlus.nlp.universal_dependencies import ParsedUniversalDependencies
-from LTUAssistantPlus.services.assistant_services_base import AssistantServicesBase
-from LTUAssistantPlus.skills.skill import SkillInput, Skill
-from LTUAssistantPlus.skills import available_skills
+from nlp.universal_dependencies import ParsedUniversalDependencies
+from services.assistant_services_base import AssistantServicesBase
+from skills.skill import SkillInput, Skill
+from skills import available_skills
 
 from typing import Optional
 

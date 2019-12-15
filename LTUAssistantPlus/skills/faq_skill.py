@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from LTUAssistantPlus.services.assistant_services_base import AssistantServicesBase
+from services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
 
 from neo4j import GraphDatabase
