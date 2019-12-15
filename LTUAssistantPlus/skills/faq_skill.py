@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
-from ..nlp.universal_dependencies import ParsedUniversalDependencies
-from ..services.assistant_services_base import AssistantServicesBase
+from LTUAssistantPlus.services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
+
+from neo4j import GraphDatabase
+from typing import List
 
 
 class FAQSkill(Skill):
@@ -10,8 +12,8 @@ class FAQSkill(Skill):
 
     def __init__(self):
         """Initializes a new instance of the FAQSkill class."""
-        # TODO
-        pass
+        # The database driver will be initialized in the perform_setup method.
+        self._driver = None
 
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
@@ -29,6 +31,11 @@ class FAQSkill(Skill):
 
     def perform_setup(self, services: AssistantServicesBase):
         """Executes any setup work necessary for this skill before it can be used."""
+        try:
+            self._driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "password"))
+        except Exception as e:
+            raise RuntimeError("Failed to establish database connection.") from e
+
         if not services.settings_service.faq_initialized:
             self._set_up_database()
             services.settings_service.faq_initialized = True
@@ -58,7 +65,18 @@ class FAQSkill(Skill):
         # TODO: Fill this in and return either True or False.
         pass
 
+    def _run_query_multiple_results(self, query: str) -> List[str]:
+        """Runs the provided Cypher query expected to find multiple results, and returns a list of strings."""
+        # TODO
+        pass
+
+    def _run_query_single_result(self, query: str) -> str:
+        """Runs the provided Cypher query expected to find one result, and return a single string."""
+        # TODO
+        pass
+
     def _set_up_database(self):
         """Sets up the database used for answering questions by crawling the LTU website."""
+        
         # TODO: Fill this in.
         raise NotImplementedError("The FAQSkill database setup has not been implemented yet.")
