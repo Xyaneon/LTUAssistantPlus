@@ -54,13 +54,25 @@ python -m pip install -r requirements.txt
 
 ## Usage
 
-First, start the Neo4j server. Navigate to the installation directory (if you
-used the Chocolatey command above, this is likely
-`C:\tools\neo4j-community\neo4j-community-3.5.1`), then run:
+Navigate to the Neo4j installation directory (if you used the Chocolatey
+command above, this is likely
+`C:\tools\neo4j-community\neo4j-community-3.5.1`).
+
+Before you start the server for the first time, you need to set the password.
+Run the following command (you only ever need to do this once):
+
+```PS
+bin/neo4j-admin set-initial-password password
+```
+
+Then start the server:
 
 ```PS
 bin\neo4j console
 ```
+
+The above will allow the assistant to connect to the database using the Bolt
+driver endpoint on port 7678, with username `neo4j` and password `password`.
 
 In another command prompt, navigate to the project's top-level directory, then
 run:
