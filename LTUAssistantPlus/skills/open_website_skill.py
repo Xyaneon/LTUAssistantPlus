@@ -59,7 +59,7 @@ class OpenWebsiteSkill(Skill):
             return
         self.__open_site(site_name, site_url, services, skill_input.verbose)
     
-    def perform_setup(self):
+    def perform_setup(self, services):
         """Executes any setup work necessary for this skill before it can be used."""
         pass
     
