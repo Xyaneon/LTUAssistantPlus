@@ -37,7 +37,7 @@ elevated PowerShell prompt to install Neo4j Community Edition (based on
 [this blog post][Neo4j via Chocolatey]):
 
 ```PS
-choco install neo4j-community -version 3.5.1 -packageParameters "/HTTPEndpoint:127.0.0.1:7687"
+choco install neo4j-community -version 3.5.1
 ```
 
 After this, you will also need the project's direct dependencies. For instance,
