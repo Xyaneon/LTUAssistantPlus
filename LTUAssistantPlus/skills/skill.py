@@ -32,6 +32,6 @@ class Skill(ABC):
         pass
 
     @abstractmethod
-    def perform_setup(self):
+    def perform_setup(self, services: AssistantServicesBase):
         """Executes any setup work necessary for this skill before it can be used."""
         pass

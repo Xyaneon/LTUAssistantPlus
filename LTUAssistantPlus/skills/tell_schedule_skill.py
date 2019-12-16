@@ -40,6 +40,6 @@ class TellScheduleSkill(Skill):
                                     event_list[-1].start_time_str]) + '.'
         services.user_interaction_service.speak(output_str, skill_input.verbose)
     
-    def perform_setup(self):
+    def perform_setup(self, services):
         """Executes any setup work necessary for this skill before it can be used."""
         pass

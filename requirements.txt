@@ -1,21 +1,12 @@
-blis==0.4.1
-certifi==2019.9.11
-chardet==3.0.4
-cymem==2.0.2
-idna==2.8
-murmurhash==1.0.2
+beautifulsoup4==4.8.1
+neo4j==1.7.6
 notify2==0.3.1; platform_system == "Linux"
-numpy==1.17.3
-plac==0.9.6
-preshed==3.0.2
 PyAudio==0.2.11
 pypiwin32==223; platform_system == "Windows"
 pywin32==225; platform_system == "Windows"
 requests==2.22.0
-spacy>=2.2.0,<3.0.0
+spacy==2.2.1
 SpeechRecognition==3.8.1
-srsly==0.1.0
-tqdm==4.36.1
 urllib3==1.25.6
 win10toast==0.9; platform_system == "Windows"
 

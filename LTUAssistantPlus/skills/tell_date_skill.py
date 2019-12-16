@@ -21,6 +21,6 @@ class TellDateSkill(Skill):
         """Executes this skill on the given command input."""
         services.user_interaction_service.speak(f"It is currently {services.calendar_service.get_current_date()}.", True)
     
-    def perform_setup(self):
+    def perform_setup(self, services):
         """Executes any setup work necessary for this skill before it can be used."""
         pass

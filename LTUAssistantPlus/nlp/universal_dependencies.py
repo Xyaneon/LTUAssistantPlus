@@ -8,23 +8,23 @@ class ParsedUniversalDependencies(object):
     """
 
     def __init__(self,
-        adj: str = None,
-        adp: str = None,
-        adv: str = None,
-        aux: str = None,
-        cconj: str = None,
-        det: str = None,
-        intj: str = None,
-        noun: str = None,
-        num: str = None,
-        part: str = None,
-        pron: str = None,
-        propn: str = None,
-        punct: str = None,
-        sconj: str = None,
-        sym: str = None,
-        verb: str = None,
-        x: str = None):
+                 adj: str = None,
+                 adp: str = None,
+                 adv: str = None,
+                 aux: str = None,
+                 cconj: str = None,
+                 det: str = None,
+                 intj: str = None,
+                 noun: str = None,
+                 num: str = None,
+                 part: str = None,
+                 pron: str = None,
+                 propn: str = None,
+                 punct: str = None,
+                 sconj: str = None,
+                 sym: str = None,
+                 verb: str = None,
+                 x: str = None):
         """Initializes a new instance of the ParsedUniversalDependencies class."""
         self.adj = adj
         """The ADJ (adjective) tag associated with the parsed sentence."""
@@ -60,9 +60,11 @@ class ParsedUniversalDependencies(object):
         """The VERB (verb) tag associated with the parsed sentence."""
         self.x = x
         """The X (other) tag associated with the parsed sentence."""
-    
+
     def __repr__(self) -> str:
         """Returns a string representation of this object."""
-        attributes = ["adj", "adp", "adv", "aux", "cconj", "det", "intj", "noun", "num", "part", "pron", "propn", "punct", "sconj", "sym", "verb", "x"]
-        attributes_str = ";".join(["{}={}".format(attribute, getattr(self, attribute)) for attribute in attributes if getattr(self, attribute) is not None])
+        attributes = ["adj", "adp", "adv", "aux", "cconj", "det", "intj", "noun", "num", "part", "pron", "propn",
+                      "punct", "sconj", "sym", "verb", "x"]
+        attributes_str = ";".join(["{}={}".format(attribute, getattr(self, attribute)) for attribute in attributes if
+                                   getattr(self, attribute) is not None])
         return f"<{self.__class__.__name__} {attributes_str}>"
