@@ -14,7 +14,11 @@ class RoomFinderSkill(Skill):
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
         verb = (skill_input.verb or None) and skill_input.verb.lower()
-        return verb in self._cmd_list
+        if verb in self._cmd_list:
+            return True
+        else:
+            deps = skill_input.dependencies
+            return deps.adv == "where" and deps.aux == "be"
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""

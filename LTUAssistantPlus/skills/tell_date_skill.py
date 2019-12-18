@@ -15,7 +15,12 @@ class TellDateSkill(Skill):
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         verb_object = (skill_input.verb_object or None) and skill_input.verb_object.lower()
-        return verb in self._cmd_list and (verb_object == "date" or verb_object == "day")
+        if verb in self._cmd_list and (verb_object == "date" or verb_object == "day"):
+            return True
+        else:
+            return skill_input.dependencies.pron == "what" and \
+                   skill_input.dependencies.aux == "be" and \
+                   skill_input.dependencies.noun == "date"
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
