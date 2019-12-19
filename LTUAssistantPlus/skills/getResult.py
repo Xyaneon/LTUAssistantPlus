@@ -10,15 +10,22 @@ def find_properties(property, text):
         for record in result:
             print(str(record))
     driver.close()
-
-#to find the node with a specific property
-# match (n:person)where n.name=”alice” return n
+    
+#What concentrations are available for a Bachelor’s of Science in Computer Science?
+def getConcentration(property,type):
+    driver = connect()
+    with driver.session() as session:
+        # print("MATCH(n:"+property+") where n.node_type = '"+type+"' return n.name")
+        result= session.run("MATCH(n:"+property+") where n.node_type = '"+type+"' return n.name")
+        for record in result:
+            print(str(record))
+    driver.close()
 
 #multi level search through relationship
 # match(na:bank{id:‘001’})-[re1]->(nb:company)-[re2]->(nc:people) return na,re1,nb,re2,nc
 
 def main():
     find_properties('title','Department Chair')
-
+    getConcentration('Concentration','Master')
 
 main()
