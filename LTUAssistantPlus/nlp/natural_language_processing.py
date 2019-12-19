@@ -32,6 +32,9 @@ def __get_word_by_ud_pos(sentence: Sentence, upos: str) -> Optional[str]:
 def __parse_sentence(sentence: Sentence) -> ParsedUniversalDependencies:
     """Parses parts of speech from the provided Sentence."""
     sentence.print_tokens()
+    #tokenize
+    # remove the stopwards, convert to lowercase
+    #bi/n-grams
     adj = __get_word_by_ud_pos(sentence, "ADJ")
     adp = __get_word_by_ud_pos(sentence, "ADP")
     adv = __get_word_by_ud_pos(sentence, "ADV")

@@ -1,25 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
-# from neo4j import GraphDatabase
 import re
-
-#driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "password"))
-
-
-def add_staff(tx, name, title, department, email, phone, office):
-    tx.run("MERGE (a:Staff {name: $name, title: $title, department: $department, email: $email, phone: $phone, office: $office}) ",
-           name=name, title=title, email=email, phone=phone, office=office, department=department)
-
-
-def print_staff(tx):
-    for record in tx.run("MATCH (a:Staff)"
-                         "RETURN a.name ORDER BY a.name"):
-        print(record["a.name"])
 
 # Everything under this - should get put into a function called: scrape_department_staff
 
+from neo4j_db import *
+
 
 def scrape_department_staff(link: str):
+    driver = connect()
+
     page = requests.get(link)
     soup = BeautifulSoup(page.content, 'html.parser')
 
@@ -62,7 +52,7 @@ def scrape_department_staff(link: str):
     driver.close()
 
 
-def scrape_bacholor_computer_science(link: str):
+def scrape_bacholor_computer_science_minor(link):
     # Tabs - Minor/Dual Major, Concentrations, Curriculum, Careers
     page = requests.get(link)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -112,8 +102,10 @@ def scrape_bacholor_computer_science(link: str):
     print(minor_completion_option_3)
     print(transfer)
     print(dual)
+
    #get the concentration
     bachelarCs=getConcentrations(soup)
+
     #get the curriculum
     bachelarCsCurriculum=getCurriculum(soup)
 
@@ -154,6 +146,14 @@ def scrape_bacholor_computer_science(link: str):
     #  List aspects
     #  List industries
     #  Annual average starting salary
+
+    driver = connect()
+
+    with driver.session() as session:
+        for cs in bachelarCs:
+                session.write_transaction(add_concentration, cs["name"],cs["description"])
+    driver.close()
+
  
  # ^.\.\s(.*)\s\((\d+).*$
     # Concentrations
@@ -213,6 +213,20 @@ def getCurriculum(soup):
         })
     return curriculum_array
 
+def createCourse(values):
+    headers = ['Course Number', 'Subject', 'Credit']
+    course = {}
+    if len(values) > 0:
+        course[headers[0]] = values[0].text
+
+    if len(values) > 1:
+        course[headers[1]] = values[1].text
+
+    if len(values) > 2:
+        course[headers[2]] = values[2].text
+
+    return course
+
 def scrape_master_computerScience(link: str):
     # Tabs -, Concentrations, Admissions Requirements, Curriculum
     page = requests.get(link)
@@ -227,7 +241,7 @@ def scrape_master_computerScience(link: str):
     col1_p=col1.find_all('p')
     col2= columns[1]
     col2_p=col2.find_all('p')
-    
+
     concentration_array = [
         {
             'name':'concentration' ,
@@ -266,12 +280,63 @@ def scrape_master_computerScience(link: str):
     #get the curriculum
     MasterCurriculum=soup.select('div#curriculum p')
     overview=MasterCurriculum[0].text
+
+    tables = []
+    for table_i in soup.find_all("table"):
+        table = []
+        for tr in table_i.find_all("tr"):
+            tds = tr.find_all("td")
+            course = createCourse(tds)
+            table.append(course)
+        tables.append(table)
     # print(overview)
-    track=soup.select('div#accordion > div > div')
-    track1=track.find('a').text
-    type(track)
-if __name__ == "__main__":
-    # scrape_cs_staff('https://www.ltu.edu/facultyandstaff/department/?_cid=20&_opt=dept&_brand=/arts_sciences/mathematics_computer_science/index.asp')
-    # scrape_bacholor_computer_science(
-    #     'https://www.ltu.edu/arts_sciences/mathematics_computer_science/bachelor-of-computer-science.asp#minor-major')
+    # track=soup.select('div#accordion > div > div')
+    # track1=track.find('a').text
+    # type(track)
+
+    for i, table in  enumerate(tables):
+        #print("Table "+ str(i))
+        for course in table:
+            course_text="\t"
+            for k,v in course.items():
+                course_text+=k+": "+v+", "
+            print(course_text[:-2])
+    driver = connect()
+
+    with driver.session() as session:
+        for course in tables[0]:
+            if len(course) == 3:
+                session.write_transaction(add_master, course["Course Number"],course["Subject"],course["Credit"])
+        session.read_transaction(print_staff)
+    driver.close()
+
+
+def scrape_direct_Entry():
+    link = "https://www.ltu.edu/arts_sciences/mathematics_computer_science/4plus1-bscs.asp#requirements"
+
+    # Tabs -, Concentrations, Admissions Requirements, Curriculum
+    page = requests.get(link)
+    #content = page.content
+    content = page.text.replace('&nbsp;', ' ')
+    soup = BeautifulSoup(content, 'html.parser')
+    # #concentrations
+    for table in soup.find_all("table"):
+        table.extract()
+    print("ABOUT DATA")
+    for r in soup.find_all("div",id="about"):
+        print(r.text)
+
+    print("REQUIREMENTS DATA")
+    for r in soup.find_all("div",id="requirements"):
+        print(r.text)
+
+def scrape():
+    scrape_department_staff('https://www.ltu.edu/facultyandstaff/department/?_cid=20&_opt=dept&_brand=/arts_sciences/mathematics_computer_science/index.asp')
     scrape_master_computerScience('https://www.ltu.edu/arts_sciences/mathematics_computer_science/graduate-computer-science.asp')
+
+    scrape_bacholor_computer_science_minor('https://www.ltu.edu/arts_sciences/mathematics_computer_science/bachelor-of-computer-science.asp#minor-major')
+    scrape_direct_Entry()
+
+if __name__ == "__main__":
+    create_nodes()
+    scrape()
