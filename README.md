@@ -2,11 +2,10 @@
 
 [![Build Status](https://travis-ci.com/Xyaneon/LTUAssistantPlus.svg?branch=master)](https://travis-ci.com/Xyaneon/LTUAssistantPlus)
 
-**NOTE: This project is an active work-in-progress.**
-
 LTUAssistantPlus is a voice-controlled AI assistant created specifically for use by LTU students.
 
-This is a continuation of the [LTUAssistant][LTUAssistant] project.
+This is a continuation of the [LTUAssistant][LTUAssistant] project, with a
+modernized code base and added FAQ functionality.
 
 ## Setup
 
@@ -81,19 +80,20 @@ run:
 python .\LTUAssistantPlus\LTUAssistant.py
 ```
 
-The assistant will greet you after the NLP pipeline initializes. Once you see the phrase
-`Say something!` in the terminal, you may speak your command and wait for the assistant to
-process it.
+The assistant will greet you after the NLP pipeline initializes. Once you see
+the phrase `Say something!` in the terminal, you may speak your command and
+wait for the assistant to process it.
 
 **Notes:**
-- Currently, the assistant can only process one command per session. To have it execute another command,
-  you need to restart the script.
-- The assistant's data will be stored in the `~/.LTUAssistant` directory on your computer.
+- Currently, the assistant can only process one command per session. To have
+  it execute another command, you need to restart the script.
+- The assistant's data will be stored in the `~/.LTUAssistant` directory on
+  your computer.
 
 ## Testing
 
-This project includes some unit tests. To run all tests, navigate into the `LTUAssistantPlus` directory
-under the project root, then run this command:
+This project includes some unit tests. To run all tests, navigate into the
+`LTUAssistantPlus` directory under the project root, then run this command:
 
 ```PS
 python -m unittest discover -v
@@ -101,9 +101,19 @@ python -m unittest discover -v
 
 ## License
 
-This project is made available under the MIT license. Please see the [LICENSE][license] file in the project root directory for details.
+This project is made available under the MIT license. Please see the
+[LICENSE][license] file in the project root directory for details.
 
-License notices for third-party software libraries this project uses are listed in the [THIRD_PARTY_NOTICES.txt][third-party notices] file for reference.
+License notices for third-party software libraries this project uses are
+listed in the [THIRD_PARTY_NOTICES.txt][third-party notices] file for
+reference.
+
+## About
+
+This was a project by Christopher Horton and Mengyi Chen for Lawrence
+Technological University's Collaborative Research Project 2 course during the
+Fall 2019 semester. It was done under the supervision and guidance of Dr.
+Paula Lauren.
 
 [beautifulsoup4]: https://pypi.org/project/beautifulsoup4/
 [Chocolatey]: https://chocolatey.org/
