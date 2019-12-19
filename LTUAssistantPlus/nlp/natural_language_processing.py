@@ -8,7 +8,7 @@ import os
 from settings import app_data_folder
 
 stanfordnlp_resource_path = os.path.join(app_data_folder, "stanfordnlp_resources")
-
+.venv\Scripts\activate
 if not os.path.exists(os.path.join(stanfordnlp_resource_path, "en_ewt_models")):
     # This downloads the English models for the neural pipeline
     stanfordnlp.download(download_label = 'en', resource_dir = stanfordnlp_resource_path, force = True)

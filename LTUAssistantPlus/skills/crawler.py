@@ -150,8 +150,11 @@ def scrape_bacholor_computer_science_minor(link):
     driver = connect()
 
     with driver.session() as session:
+        i=0
+        type1=['Software Engineering','Game Software Development','Business Software Development','Scientific Software Development']
         for cs in bachelarCs:
-                session.write_transaction(add_concentration, cs["name"],cs["description"])
+                session.write_transaction(add_concentration, cs["name"],cs["description"],"Bachelor",type1[i])
+                i+=1
     driver.close()
 
  
@@ -256,6 +259,19 @@ def scrape_master_computerScience(link: str):
             'description':col2_p[1].text+ col2_p[2].text+ col2_p[3].text +col2_p[4].text
         }
     ]
+
+    driver = connect()
+
+    with driver.session() as session:
+        types2 = ["Intelligent Systems","Data Science"]
+
+        i=0 
+        for cs in concentration_array[1:]:
+                session.write_transaction(add_concentration, cs["name"],cs["description"],"Master",types2[i])
+                i+=1
+    driver.close()
+
+
     # print(concentration_array)
 
     admissons_ps = soup.select('div#admissions p')
@@ -338,5 +354,7 @@ def scrape():
     scrape_direct_Entry()
 
 if __name__ == "__main__":
+    clean_graph()
     create_nodes()
     scrape()
+    create_relationships()
