@@ -64,6 +64,14 @@ Run the following command (you only ever need to do this once):
 bin/neo4j-admin set-initial-password password
 ```
 
+Also, for running Neo4j locally, you may have to change the following property
+in your `neo4j.conf` file in the `conf` subfolder of the installation
+directory to disable HTTPS (we only need HTTP and Bolt here):
+
+```
+dbms.connector.https.enabled=false
+```
+
 Then start the server:
 
 ```PS
