@@ -13,8 +13,12 @@ class TestRoomFinderSkill(unittest.TestCase):
         self.skill = RoomFinderSkill()
     
     def test_skillShouldRecognizeSentence(self):
-        sentences = ["find room A101",
-                     "where is room A101"]
+        sentences = [
+            "find A101",
+            "find room A101",
+            "where is A101",
+            "where is room A101"
+        ]
         
         for sentence in sentences:
             ud = Parse(sentence)
