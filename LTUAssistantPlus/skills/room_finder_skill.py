@@ -40,7 +40,6 @@ class RoomFinderSkill(Skill):
             floor = building_and_floor[1]
             finder_message = f"Your room is in the {building} on floor {floor}."
         except Exception:
-            print(traceback.format_exc())
             finder_message = "Sorry, I don't think you provided me with a valid room number."
         services.user_interaction_service.speak(finder_message, skill_input.verbose)
     
