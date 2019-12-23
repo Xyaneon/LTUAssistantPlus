@@ -36,7 +36,7 @@ if __name__ == "__main__":
                         type=str)
     args = parser.parse_args()
 
-    services = AssistantServices(args.text_only_mode)
+    services = AssistantServices(text_only_mode=args.text_only_mode)
     init_skills(services)
 
     if args.command_string:
