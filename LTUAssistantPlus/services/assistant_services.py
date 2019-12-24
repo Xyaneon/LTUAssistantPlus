@@ -17,14 +17,21 @@ from services.user_interface.user_interaction_service import UserInteractionServ
 class AssistantServices(AssistantServicesBase):
     """Makes various services provided by the assistant available for use by skills."""
 
-    def __init__(self, text_only_mode: bool):
+    def __init__(self,
+        calendar_service: CalendarServiceBase=None,
+        listening_service: ListeningServiceBase=None,
+        notification_service: NotificationServiceBase=None,
+        settings_service: SettingsServiceBase=None,
+        speaking_service: SpeakingServiceBase=None,
+        user_interaction_service: UserInteractionServiceBase=None,
+        text_only_mode: bool=False):
         """Initializes a new instance of the `AssistantServices` class."""
-        self.__settings_service = SettingsService()
-        self.__calendar_service = CalendarService()
-        self.__notification_service = NotificationService()
-        self.__speak_service = SpeakingService(self.__notification_service, self.__settings_service, text_only_mode)
-        self.__listen_service = ListeningService(text_only_mode)
-        self.__interaction_service = UserInteractionService(self.__speak_service, self.__listen_service)
+        self.__settings_service = settings_service if settings_service is not None else SettingsService()
+        self.__calendar_service = calendar_service if calendar_service is not None else CalendarService()
+        self.__notification_service = notification_service if notification_service is not None else NotificationService()
+        self.__speak_service = speaking_service if speaking_service is not None else SpeakingService(self.__notification_service, self.__settings_service, text_only_mode)
+        self.__listen_service = listening_service if listening_service is not None else ListeningService(text_only_mode)
+        self.__interaction_service = user_interaction_service if user_interaction_service is not None else UserInteractionService(self.__speak_service, self.__listen_service)
     
     @property
     def calendar_service(self) -> CalendarServiceBase:
