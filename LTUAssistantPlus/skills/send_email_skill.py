@@ -3,7 +3,7 @@
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.user_interaction_service_base import UserInteractionServiceBase
+from services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
 
 class SendEmailSkill(Skill):
@@ -16,15 +16,27 @@ class SendEmailSkill(Skill):
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
         verb = (skill_input.verb or None) and skill_input.verb.lower()
-        return verb in self._cmd_list
+        if verb in self._cmd_list:
+            return True
+        else:
+            return skill_input.dependencies.noun == "email" and \
+                   self._string_is_an_email_address(skill_input.dependencies.x)
     
-    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
+    def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.noun
         recipient_info = verb_object
-        if recipient_info and recipient_info.find("@") != -1:
-            recipient = 'mailto:' + recipient_info  # Open default email client
+        if self._string_is_an_email_address(recipient_info):
+            email_url = 'mailto:' + recipient_info  # Open default email client
         else:
-            recipient = 'https://mail.google.com/mail/u/0/#compose' # Gmail
-        user_interaction_service.speak('Composing an email...', skill_input.verbose)
-        webbrowser.open(recipient)
+            email_url = 'https://mail.google.com/mail/u/0/#compose' # Gmail
+        services.user_interaction_service.speak('Composing an email...', skill_input.verbose)
+        webbrowser.open(email_url)
+    
+    def perform_setup(self, services):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass
+
+    def _string_is_an_email_address(self, string_to_check: str) -> bool:
+        """Returns `True` if the provided string is an email address."""
+        return string_to_check and string_to_check.find("@") != -1

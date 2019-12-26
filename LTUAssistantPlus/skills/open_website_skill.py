@@ -3,7 +3,7 @@
 import webbrowser
 
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.user_interaction_service_base import UserInteractionServiceBase
+from services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
 
 class OpenWebsiteSkill(Skill):
@@ -11,18 +11,25 @@ class OpenWebsiteSkill(Skill):
 
     def __init__(self):
         """Initializes a new instance of the OpenWebsiteSkill class."""
-        self._cmd_list = ['start', 'open', 'go', 'go to', 'browse', 'browse to', 'launch', 'take to', 'show']
+        self._cmd_list = ['start', 'open', 'go', 'go to', 'take to']
 
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
         verb = (skill_input.verb or None) and skill_input.verb.lower()
-        return verb in self._cmd_list
+        if verb in self._cmd_list:
+            return True
+        elif skill_input.dependencies.adj == "open":
+            return True
+        else:
+            return skill_input.dependencies.verb == "take" and \
+                   skill_input.dependencies.pron and \
+                   skill_input.dependencies.part == "to"
     
-    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
+    def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.dependencies.noun or skill_input.dependencies.propn
         if verb_object is None:
-            user_interaction_service.speak("I couldn't understand what website you want to open.")
+            services.user_interaction_service.speak("I couldn't understand what website you want to open.")
             return
         requested_site_name = verb_object.lower()
         site_name = ""
@@ -55,11 +62,15 @@ class OpenWebsiteSkill(Skill):
             site_name = "ltu events"
             site_url = "http://www.ltu.edu/myltu/calendar.asp"
         else:
-            user_interaction_service.speak("I don't recognize the website you want to open.")
+            services.user_interaction_service.speak("I don't recognize the website you want to open.")
             return
-        self.__open_site(site_name, site_url, user_interaction_service, skill_input.verbose)
+        self.__open_site(site_name, site_url, services, skill_input.verbose)
     
-    def __open_site(self, site_name: str, site_url: str, user_interaction_service: UserInteractionServiceBase, verbose: bool):
+    def perform_setup(self, services):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass
+    
+    def __open_site(self, site_name: str, site_url: str, services: AssistantServicesBase, verbose: bool):
         """Announces opening a site and then actually opens it."""
-        user_interaction_service.speak(f"Opening {site_name}...", verbose)
+        services.user_interaction_service.speak(f"Opening {site_name}...", verbose)
         webbrowser.open(site_url)

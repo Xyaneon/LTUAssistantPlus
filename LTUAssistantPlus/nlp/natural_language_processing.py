@@ -1,37 +1,27 @@
 #!/usr/bin/python3
 
-import stanfordnlp
-from stanfordnlp.pipeline.doc import Sentence
+import spacy
 from typing import List, Optional
 from nlp.universal_dependencies import ParsedUniversalDependencies
-import os
-from settings import app_data_folder
 
-stanfordnlp_resource_path = os.path.join(app_data_folder, "stanfordnlp_resources")
-.venv\Scripts\activate
-if not os.path.exists(os.path.join(stanfordnlp_resource_path, "en_ewt_models")):
-    # This downloads the English models for the neural pipeline
-    stanfordnlp.download(download_label = 'en', resource_dir = stanfordnlp_resource_path, force = True)
-nlp = stanfordnlp.Pipeline(models_dir = stanfordnlp_resource_path) # This sets up a default neural pipeline in English
+nlp = spacy.load("en_core_web_sm")
 
 def Parse(text: str) -> ParsedUniversalDependencies:
     """Parses the provided text."""
-    sentences = __parse_sentences_from_text(text)
-    return __parse_sentence(sentences[0])
+    doc = nlp(text)
+    return __parse_tokens(doc)
 
-def __get_word_by_ud_pos(sentence: Sentence, upos: str) -> Optional[str]:
+def __get_word_by_ud_pos(sentence: spacy.tokens.Doc, upos: str) -> Optional[str]:
     """Gets the requested word from the sentence as a string by its Universal
     Dependencies part-of-speech tag if present, or None if not found."""
     upos_upper = upos.upper()
-    for token in sentence.tokens:
-        for word in token.words:
-            if word.upos.upper() == upos_upper:
-                return word.text
+    for token in sentence:
+        if token.pos_.upper() == upos_upper:
+            return token.lemma_
     return None
 
-def __parse_sentence(sentence: Sentence) -> ParsedUniversalDependencies:
-    """Parses parts of speech from the provided Sentence."""
-    sentence.print_tokens()
+def __parse_tokens(sentence: spacy.tokens.Doc) -> ParsedUniversalDependencies:
+    """Parses parts of speech from the provided tokens."""
     #tokenize
     # remove the stopwards, convert to lowercase
     #bi/n-grams
@@ -71,11 +61,6 @@ def __parse_sentence(sentence: Sentence) -> ParsedUniversalDependencies:
         sym = sym,
         verb = verb,
         x = x)
-
-def __parse_sentences_from_text(text: str) -> List[Sentence]:
-    """Parses sentences from the provided text."""
-    doc = nlp(text)
-    return doc.sentences
 
 if __name__ == "__main__":
     parsing_results = Parse("This is a sample sentence.")

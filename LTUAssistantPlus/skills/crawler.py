@@ -4,7 +4,7 @@ import re
 
 # Everything under this - should get put into a function called: scrape_department_staff
 
-from neo4j_db import *
+from skills.neo4j_db import *
 
 
 def scrape_department_staff(link: str):
@@ -52,7 +52,7 @@ def scrape_department_staff(link: str):
     driver.close()
 
 
-def scrape_bacholor_computer_science_minor(link):
+def scrape_bacholor_computer_science_minor(link: str):
     # Tabs - Minor/Dual Major, Concentrations, Curriculum, Careers
     page = requests.get(link)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -102,10 +102,8 @@ def scrape_bacholor_computer_science_minor(link):
     print(minor_completion_option_3)
     print(transfer)
     print(dual)
-
-   #get the concentration
+    #get the concentration
     bachelarCs=getConcentrations(soup)
-
     #get the curriculum
     bachelarCsCurriculum=getCurriculum(soup)
 
@@ -244,7 +242,6 @@ def scrape_master_computerScience(link: str):
     col1_p=col1.find_all('p')
     col2= columns[1]
     col2_p=col2.find_all('p')
-
     concentration_array = [
         {
             'name':'concentration' ,

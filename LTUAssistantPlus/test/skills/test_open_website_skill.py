@@ -12,7 +12,7 @@ class TestOpenWebsiteSkill(unittest.TestCase):
         self.skill = OpenWebsiteSkill()
     
     def test_skillShouldRecognizeCommand(self):
-        verbs = ["start", "open", "go", "go to", "browse", "browse to", "launch", "take to", "show"]
+        verbs = ["start", "open", "go", "go to", "take to"]
 
         for verb in verbs:
             ud = ParsedUniversalDependencies(verb=verb)

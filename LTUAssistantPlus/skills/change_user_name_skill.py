@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 
-import settings
-
 from nlp.universal_dependencies import ParsedUniversalDependencies
-from user_interface.user_interaction_service_base import UserInteractionServiceBase
+from services.assistant_services_base import AssistantServicesBase
 from .skill import SkillInput, Skill
 
 class ChangeUserNameSkill(Skill):
@@ -18,14 +16,19 @@ class ChangeUserNameSkill(Skill):
         verb = (skill_input.verb or None) and skill_input.verb.lower()
         return verb in self._cmd_list
     
-    def execute_for_command(self, skill_input: SkillInput, user_interaction_service: UserInteractionServiceBase):
+    def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
         verb_object = skill_input.noun
         alternate_noun = skill_input.noun # TODO: Actually get the correct alternate noun.
         new_name = alternate_noun or verb_object
         if new_name:
-            settings.set_username(new_name)
-            user_interaction_service.speak(f"Pleased to meet you, {settings.username}!", True)
+            services.settings_service.set_username(new_name)
+            services.settings_service.save_settings()
+            services.user_interaction_service.speak(f"Pleased to meet you, {services.settings_service.username}!", True)
             return True
         else:
             return False
+    
+    def perform_setup(self, services):
+        """Executes any setup work necessary for this skill before it can be used."""
+        pass
