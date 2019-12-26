@@ -22,6 +22,9 @@ def __get_word_by_ud_pos(sentence: spacy.tokens.Doc, upos: str) -> Optional[str]
 
 def __parse_tokens(sentence: spacy.tokens.Doc) -> ParsedUniversalDependencies:
     """Parses parts of speech from the provided tokens."""
+    #tokenize
+    # remove the stopwards, convert to lowercase
+    #bi/n-grams
     adj = __get_word_by_ud_pos(sentence, "ADJ")
     adp = __get_word_by_ud_pos(sentence, "ADP")
     adv = __get_word_by_ud_pos(sentence, "ADV")
