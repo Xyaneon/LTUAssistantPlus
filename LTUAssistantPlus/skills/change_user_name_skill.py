@@ -9,22 +9,20 @@ class ChangeUserNameSkill(Skill):
 
     def __init__(self):
         """Initializes a new instance of the ChangeUserNameSkill class."""
-        self._cmd_list = ['call']
+        pass
 
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
-        verb = (skill_input.verb or None) and skill_input.verb.lower()
-        return verb in self._cmd_list
+        return skill_input.dependencies.verb == "call" or \
+               (skill_input.dependencies.noun == "name" and skill_input.dependencies.aux == "be")
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
-        verb_object = skill_input.noun
-        alternate_noun = skill_input.noun # TODO: Actually get the correct alternate noun.
-        new_name = alternate_noun or verb_object
+        new_name = skill_input.dependencies.propn
         if new_name:
-            services.settings_service.set_username(new_name)
+            services.settings_service.username = new_name
             services.settings_service.save_settings()
-            services.user_interaction_service.speak(f"Pleased to meet you, {services.settings_service.username}!", True)
+            services.user_interaction_service.speak(f"Pleased to meet you, {new_name}!", True)
             return True
         else:
             return False

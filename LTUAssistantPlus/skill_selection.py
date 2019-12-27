@@ -18,10 +18,11 @@ def identify_and_run_command(ud: ParsedUniversalDependencies, services: Assistan
     skill_input = SkillInput(ud, verbose)
 
     # Print parameters for debugging purposes
-    print('\tverb:           ' + (skill_input.verb if skill_input.verb is not None else "(None)"))
-    print('\tverb_object:    ' + (skill_input.verb_object if skill_input.verb_object is not None else "(None)"))
-    print('\talternate_noun: ' + (skill_input.alternate_noun if skill_input.alternate_noun is not None else "(None)"))
-    print('\tadjective:      ' + (skill_input.adjective if skill_input.adjective is not None else "(None)"))
+    print('  * Universal dependencies:\n      ' + (str(skill_input.dependencies) if skill_input.dependencies is not None else "(None)"))
+    print('  * verb:           ' + (skill_input.verb if skill_input.verb is not None else "(None)"))
+    print('  * verb_object:    ' + (skill_input.verb_object if skill_input.verb_object is not None else "(None)"))
+    print('  * alternate_noun: ' + (skill_input.alternate_noun if skill_input.alternate_noun is not None else "(None)"))
+    print('  * adjective:      ' + (skill_input.adjective if skill_input.adjective is not None else "(None)"))
 
     skill = _select_skill_for_input(skill_input)
     if skill is not None:
