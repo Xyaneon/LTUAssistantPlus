@@ -98,6 +98,55 @@ wait for the assistant to process it.
 - The assistant's data will be stored in the `~/.LTUAssistant` directory on
   your computer.
 
+### Sample commands
+
+LTUAssistantPlus organizes what it can do into multiple skills, each of which
+is dedicated to handling one particular task. Here are some things you can
+say to the assistant to try out its capabilities.
+
+#### Add schedule events
+
+- "Schedule an event."
+- "Plan an event."
+- "Remind me about an event."
+
+#### Change the assistant's voice
+
+- "Use a male voice."
+- "Use a female voice."
+
+#### Change the name the assistant calls you by
+
+- "Call me Bob."
+
+#### Open an LTU website
+
+- "Go to BannerWeb."
+- "Open Gmail."
+
+#### Find the building and floor of a room on campus
+
+- "Find room S108."
+
+#### Compose an email
+
+- "Send an email."
+- "Compose an email to example@example.com."
+
+#### Tell the current date
+
+- "Tell me the date."
+- "What is the current date?"
+
+#### Remind the user which events are scheduled for today
+
+- "What is my schedule?"
+
+#### Tell the current time
+
+- "Tell me the time."
+- "What is the current time?"
+
 ## Testing
 
 This project includes some unit tests. To run all tests, navigate into the
