@@ -19,7 +19,7 @@ class AddCalendarEventSkill(Skill):
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
-        verb_object = skill_input.noun
+        verb_object = skill_input.dependencies.noun
         event_str = verb_object
         if event_str == 'event':
             event_sentence = services.user_interaction_service.ask_question('Okay, what is the event called?', skill_input.verbose)
