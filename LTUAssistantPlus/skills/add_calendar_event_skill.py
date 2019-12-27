@@ -19,19 +19,31 @@ class AddCalendarEventSkill(Skill):
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
-        verb_object = skill_input.noun
+        verb_object = skill_input.dependencies.noun
         event_str = verb_object
-        if event_str == 'event':
-            event_sentence = services.user_interaction_service.ask_question('Okay, what is the event called?', skill_input.verbose)
-            day_sentence = services.user_interaction_service.ask_question('What day will this be on?', skill_input.verbose)
-            time_sentence = services.user_interaction_service.ask_question('What time will this start at?', skill_input.verbose)
-            cal_event = CalendarEvent(event_sentence, day_sentence, time_sentence, '')
+        if event_str == "event":
+            event_sentence = self._ask_for_event_name(services, skill_input.verbose)
+            day_sentence = self._ask_for_event_day(services, skill_input.verbose)
+            time_sentence = self._ask_for_event_start_time(services, skill_input.verbose)
+            cal_event = CalendarEvent(event_sentence, day_sentence, time_sentence, "")
             services.calendar_service.add_event(cal_event)
-            feedback_sentence = 'Alright, I\'m putting down ' + str(cal_event) + '.'
+            feedback_sentence = "Alright, I'm putting down " + str(cal_event) + "."
             services.user_interaction_service.speak(feedback_sentence, skill_input.verbose)
         else:
-            services.user_interaction_service.speak('Sorry, I am unable to help you schedule this right now.', skill_input.verbose)
+            services.user_interaction_service.speak("Sorry, I am unable to help you schedule this right now.", skill_input.verbose)
     
     def perform_setup(self, services):
         """Executes any setup work necessary for this skill before it can be used."""
         pass
+
+    def _ask_for_event_day(self, services: AssistantServicesBase, verbose: bool=False) -> str:
+        """Asks the user for the day of the event and returns it."""
+        return services.user_interaction_service.ask_question("What day will this be on?", verbose)
+    
+    def _ask_for_event_name(self, services: AssistantServicesBase, verbose: bool=False) -> str:
+        """Asks the user for the name of the event and returns it."""
+        return services.user_interaction_service.ask_question("Okay, what is the event called?", verbose)
+    
+    def _ask_for_event_start_time(self, services: AssistantServicesBase, verbose: bool=False) -> str:
+        """Asks the user for the start time of the event and returns it."""
+        return services.user_interaction_service.ask_question("What time will this start at?", verbose)

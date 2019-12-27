@@ -24,3 +24,15 @@ class TestAddCalendarEventSkill(unittest.TestCase):
                 self.skill.matches_command(skill_input),
                 f"AddCalendarEventSkill did not recognize sentence='{sentence}'\nud: {ud}"
             )
+    
+    def test_skillShouldNotRecognizeSentencesAskingAboutCurrentSchedule(self):
+        sentences = ["tell me my schedule",
+                     "what is my schedule"]
+        
+        for sentence in sentences:
+            ud = Parse(sentence)
+            skill_input = SkillInput(ud, False)
+            self.assertFalse(
+                self.skill.matches_command(skill_input),
+                f"AddCalendarEventSkill recognized sentence='{sentence}'\nud: {ud}"
+            )
