@@ -41,8 +41,8 @@ class TestChangeUserNameSkill(unittest.TestCase):
 
         self.skill.execute_for_command(skill_input, mock_assistant_services)
 
-        mock_assistant_services.settings_service.set_username.assertCalledWith("Bob")
-        mock_assistant_services.settings_service.save.assertCalledWith()
+        mock_assistant_services.settings_service.set_username.assert_called_with("Bob")
+        mock_assistant_services.settings_service.save_settings.assert_called_with()
     
     def test_skillShouldGreetUserWithNewName(self):
         sentence = "Call me Bob."
