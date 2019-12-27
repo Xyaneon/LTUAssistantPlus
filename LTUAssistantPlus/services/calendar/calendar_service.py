@@ -30,7 +30,13 @@ class CalendarService(CalendarServiceBase):
             calreader = csv.reader(calendar_csv, delimiter=',', quotechar='"')
             for row in calreader:
                 print(', '.join(row))
-                event_list.append(CalendarEvent(row[0], row[1], row[2], row[3]))
+                if len(row) == 0:
+                    continue
+                try:
+                    calendar_event = self._create_event_from_row(row)
+                    event_list.append(calendar_event)
+                except ValueError as e:
+                    print(f"{str(e)}; skipping.")
         return event_list
 
     def get_events_for_date(self, date_str: str=''):
@@ -69,3 +75,14 @@ class CalendarService(CalendarServiceBase):
         """Returns a printable string for the current time."""
         current_time = datetime.datetime.now().date()
         return current_time.strftime('%B %d, %Y')
+    
+    def _create_event_from_row(self, row: List[str]) -> CalendarEvent:
+        """Creates a new `CalendarEvent` from a row in the data file."""
+        if len(row) < 3:
+            raise ValueError(f"Too few row items for a calendar event ({len(row)} found).")
+        elif len(row) == 3:
+            return CalendarEvent(row[0], row[1], row[2], "")
+        elif len(row) == 4:
+            return CalendarEvent(row[0], row[1], row[2], row[3])
+        else:
+            raise ValueError(f"Too many row items for a calendar event ({len(row)} found).")
