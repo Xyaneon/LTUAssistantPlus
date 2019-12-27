@@ -13,13 +13,14 @@ class ChangeUserNameSkill(Skill):
 
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
-        return skill_input.dependencies.verb == "call"
+        return skill_input.dependencies.verb == "call" or \
+               (skill_input.dependencies.noun == "name" and skill_input.dependencies.aux == "be")
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
         new_name = skill_input.dependencies.propn
         if new_name:
-            services.settings_service.set_username(new_name)
+            services.settings_service.username = new_name
             services.settings_service.save_settings()
             services.user_interaction_service.speak(f"Pleased to meet you, {new_name}!", True)
             return True
