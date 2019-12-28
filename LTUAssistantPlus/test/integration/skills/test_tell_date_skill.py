@@ -22,7 +22,7 @@ class TestTellDateSkill(unittest.TestCase):
         
         for sentence in sentences:
             ud = Parse(sentence)
-            skill_input = SkillInput(ud, False)
+            skill_input = SkillInput(sentence, ud, False)
             self.assertTrue(
                 self.skill.matches_command(skill_input),
                 f"TellDateSkill did not recognize sentence='{sentence}'\nud: {ud}"

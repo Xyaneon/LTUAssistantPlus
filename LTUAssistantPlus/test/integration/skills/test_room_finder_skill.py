@@ -25,7 +25,7 @@ class TestRoomFinderSkill(unittest.TestCase):
         
         for sentence in sentences:
             ud = Parse(sentence)
-            skill_input = SkillInput(ud, False)
+            skill_input = SkillInput(sentence, ud, False)
             self.assertTrue(
                 self.skill.matches_command(skill_input),
                 f"RoomFinderSkill did not recognize sentence='{sentence}'\nud: {ud}"
@@ -35,7 +35,7 @@ class TestRoomFinderSkill(unittest.TestCase):
         sentence = "where is room A101"
         expected_output_speech = "Your room is in the Architecture Building on floor 1."
         ud = Parse(sentence)
-        skill_input = SkillInput(ud, False)
+        skill_input = SkillInput(sentence, ud, False)
         
         mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
         mock_assistant_services = create_autospec(spec=AssistantServicesBase)
@@ -49,7 +49,7 @@ class TestRoomFinderSkill(unittest.TestCase):
         sentence = "where is room Z101"
         expected_output_speech = "Sorry, I don't think you provided me with a valid room number."
         ud = Parse(sentence)
-        skill_input = SkillInput(ud, False)
+        skill_input = SkillInput(sentence, ud, False)
         
         mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
         mock_assistant_services = create_autospec(spec=AssistantServicesBase)
@@ -63,7 +63,7 @@ class TestRoomFinderSkill(unittest.TestCase):
         sentence = "where is room"
         expected_output_speech = "Sorry, I don't think you provided me with a valid room number."
         ud = Parse(sentence)
-        skill_input = SkillInput(ud, False)
+        skill_input = SkillInput(sentence, ud, False)
         
         mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
         mock_assistant_services = create_autospec(spec=AssistantServicesBase)

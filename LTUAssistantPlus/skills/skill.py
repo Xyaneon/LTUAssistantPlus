@@ -7,8 +7,11 @@ from services.assistant_services_base import AssistantServicesBase
 class SkillInput(object):
     """Represents the input data for a Skill at its entry point."""
 
-    def __init__(self, dependencies: ParsedUniversalDependencies, verbose: bool = False):
-        """Initializes a new instance of the SkillInput class."""
+    def __init__(self, sentence: str, dependencies: ParsedUniversalDependencies, verbose: bool = False):
+        """Initializes a new instance of the `SkillInput` class."""
+        if sentence is None:
+            raise TypeError("sentence cannot be None")
+        self.sentence = sentence
         if dependencies is None:
             raise TypeError("dependencies cannot be None")
         self.dependencies = dependencies

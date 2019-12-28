@@ -19,7 +19,7 @@ class TestAddCalendarEventSkill(unittest.TestCase):
         
         for sentence in sentences:
             ud = Parse(sentence)
-            skill_input = SkillInput(ud, False)
+            skill_input = SkillInput(sentence, ud, False)
             self.assertTrue(
                 self.skill.matches_command(skill_input),
                 f"AddCalendarEventSkill did not recognize sentence='{sentence}'\nud: {ud}"
@@ -31,7 +31,7 @@ class TestAddCalendarEventSkill(unittest.TestCase):
         
         for sentence in sentences:
             ud = Parse(sentence)
-            skill_input = SkillInput(ud, False)
+            skill_input = SkillInput(sentence, ud, False)
             self.assertFalse(
                 self.skill.matches_command(skill_input),
                 f"AddCalendarEventSkill recognized sentence='{sentence}'\nud: {ud}"

@@ -25,7 +25,7 @@ class TestChangeUserNameSkill(unittest.TestCase):
         
         for sentence in sentences:
             ud = Parse(sentence)
-            skill_input = SkillInput(ud, False)
+            skill_input = SkillInput(sentence, ud, False)
             self.assertTrue(
                 self.skill.matches_command(skill_input),
                 f"ChangeUserNameSkill did not recognize sentence='{sentence}'\nud: {ud}"
@@ -34,7 +34,7 @@ class TestChangeUserNameSkill(unittest.TestCase):
     def test_skillShouldSaveNewUsername(self):
         sentence = "Call me Bob."
         ud = Parse(sentence)
-        skill_input = SkillInput(ud, False)
+        skill_input = SkillInput(sentence, ud, False)
 
         mock_settings_services = create_autospec(spec=SettingsServiceBase)
         mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
@@ -52,7 +52,7 @@ class TestChangeUserNameSkill(unittest.TestCase):
         sentence = "Call me Bob."
         expected_output_speech = "Pleased to meet you, Bob!"
         ud = Parse(sentence)
-        skill_input = SkillInput(ud, False)
+        skill_input = SkillInput(sentence, ud, False)
 
         mock_settings_services = create_autospec(spec=SettingsServiceBase)
         mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
