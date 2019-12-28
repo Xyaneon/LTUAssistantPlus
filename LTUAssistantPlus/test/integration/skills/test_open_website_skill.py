@@ -82,14 +82,14 @@ class TestOpenWebsiteSkill(unittest.TestCase):
     @mock.patch("webbrowser.open", side_effect=webbrowser_open)
     def test_skillShouldOpenCorrectWebsites(self, webbrowser_open_function):
         failure_count = 0
+        mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
+        mock_assistant_services = create_autospec(spec=AssistantServicesBase)
+        mock_assistant_services.user_interaction_service.return_value = mock_user_interaction_service
+        
         for website in self._supported_websites:
             sentences = [cmd + " " + site_name for cmd in self.cmd_list for site_name in website.request_names]
             expected_output_speech = f"Opening {website.site_name}..."
 
-            mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
-            mock_assistant_services = create_autospec(spec=AssistantServicesBase)
-            mock_assistant_services.user_interaction_service.return_value = mock_user_interaction_service
-            
             for sentence in sentences:
                 ud = Parse(sentence)
                 skill_input = SkillInput(sentence, ud, False)
@@ -100,7 +100,6 @@ class TestOpenWebsiteSkill(unittest.TestCase):
                     )
                     self.skill.execute_for_command(skill_input, mock_assistant_services)
                     mock_assistant_services.user_interaction_service.speak.assert_called_with(expected_output_speech, False)
-                    webbrowser_open_function.assert_called()
                     webbrowser_open_function.assert_called_with(website.site_url)
                 except AssertionError as e:
                     print(f"OpenWebsiteSkill did not recognize website name for sentence='{sentence}'\n\tud: {ud}\n{str(e)}")
