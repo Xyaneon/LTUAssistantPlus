@@ -19,10 +19,10 @@ class TestOpenWebsiteSkill(unittest.TestCase):
     """Integration tests for `OpenWebsiteSkill`."""
     def setUp(self):
         self.skill = OpenWebsiteSkill()
+        self.cmd_list = ["start", "open", "go to", "take me to"]
     
     def test_skillShouldRecognizeSentence(self):
-        cmd_list = ["start", "open", "go", "go to", "take me to"]
-        sentences = [cmd + " https://www.ltu.edu/" for cmd in cmd_list]
+        sentences = [cmd + " https://www.ltu.edu/" for cmd in self.cmd_list]
         
         for sentence in sentences:
             ud = Parse(sentence)
@@ -34,12 +34,12 @@ class TestOpenWebsiteSkill(unittest.TestCase):
     
     @mock.patch("webbrowser.open", side_effect=webbrowser_open)
     def test_skillShouldOpenCorrectWebsites(self, webbrowser_open_function):
-        cmd_list = ["start", "open", "go", "go to", "take me to"]
-        site_names_list = ['ltu website', 'ltu homepage']
-        sentences = [cmd + " " + site_name for cmd in cmd_list for site_name in site_names_list]
+        site_names_list = ['the ltu website', 'the ltu homepage', 'the main ltu website']
+        sentences = [cmd + " " + site_name for cmd in self.cmd_list for site_name in site_names_list]
         site_name = "the main LTU website"
         site_url = "http://www.ltu.edu"
         expected_output_speech = f"Opening {site_name}..."
+        failure_count = 0
 
         mock_user_interaction_service = create_autospec(spec=UserInteractionServiceBase)
         mock_assistant_services = create_autospec(spec=AssistantServicesBase)
@@ -48,11 +48,17 @@ class TestOpenWebsiteSkill(unittest.TestCase):
         for sentence in sentences:
             ud = Parse(sentence)
             skill_input = SkillInput(sentence, ud, False)
-            self.assertTrue(
-                self.skill.matches_command(skill_input),
-                f"OpenWebsiteSkill did not recognize sentence='{sentence}'\nud: {ud}"
-            )
-            self.skill.execute_for_command(skill_input, mock_assistant_services)
-            mock_assistant_services.user_interaction_service.speak.assert_called_with(expected_output_speech, False)
-            webbrowser_open_function.assert_called()
-            webbrowser_open_function.assert_called_with(site_url)
+            try:
+                self.assertTrue(
+                    self.skill.matches_command(skill_input),
+                    f"OpenWebsiteSkill did not recognize sentence='{sentence}'\nud: {ud}"
+                )
+                self.skill.execute_for_command(skill_input, mock_assistant_services)
+                mock_assistant_services.user_interaction_service.speak.assert_called_with(expected_output_speech, False)
+                webbrowser_open_function.assert_called()
+                webbrowser_open_function.assert_called_with(site_url)
+            except AssertionError as e:
+                print(f"OpenWebsiteSkill did not recognize website name for sentence='{sentence}'\n\tud: {ud}\n\t{str(e)}")
+                failure_count += 1
+        
+        self.assertEqual(failure_count, 0, f"There were {str(failure_count)} failure(s) in this test.")
