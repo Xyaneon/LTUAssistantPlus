@@ -78,9 +78,10 @@ class OpenWebsiteSkill(Skill):
             return True
         elif deps.adj == "open":
             return True
+        elif deps.propn == "start":
+            return True
         else:
             return deps.verb in ["go", "take"] and \
-                   (deps.noun or deps.pron or deps.propn) and \
                    (deps.adp == "to" or deps.part == "to")
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
