@@ -11,11 +11,13 @@ from skills import available_skills
 from typing import Optional
 
 
-def identify_and_run_command(ud: ParsedUniversalDependencies, services: AssistantServicesBase,
+def identify_and_run_command(sentence: str,
+                             ud: ParsedUniversalDependencies,
+                             services: AssistantServicesBase,
                              verbose: bool = False) -> bool:
     """Parse the command and take an action. Returns True if the command is
     understood, and False otherwise."""
-    skill_input = SkillInput(ud, verbose)
+    skill_input = SkillInput(sentence, ud, verbose)
 
     # Print parameters for debugging purposes
     print('  * Universal dependencies:\n      ' + (str(skill_input.dependencies) if skill_input.dependencies is not None else "(None)"))
@@ -40,19 +42,3 @@ def _select_skill_for_input(skill_input: SkillInput) -> Optional[Skill]:
         if available_skill.matches_command(skill_input):
             return available_skill
     return None
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('verb', type=str, help='Assistant database command.')
-    parser.add_argument('verb_object', type=str, help='Object passed to command.')
-    parser.add_argument('-v', '--verbose',
-                        help='Explain what action is being taken.',
-                        action='store_true')
-    args = parser.parse_args()
-
-    if args.verbose:
-        print(sys.version)
-    ud = ParsedUniversalDependencies(verb=args.verb, noun=args.verb_object)
-    identify_and_run_command(ud, None, args.verbose)
-    exit()

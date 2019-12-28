@@ -22,7 +22,7 @@ def process_command(services: AssistantServicesBase, optional_message: str = Non
             services.user_interaction_service.tell_user_could_not_be_heard()
             return
     ud = Parse(sentence)
-    if not skill_selection.identify_and_run_command(ud, services):
+    if not skill_selection.identify_and_run_command(sentence, ud, services):
         services.user_interaction_service.tell_user_command_was_not_understood()
 
 
