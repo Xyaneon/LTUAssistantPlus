@@ -16,16 +16,16 @@ class SendEmailSkill(Skill):
     def matches_command(self, skill_input: SkillInput) -> bool:
         """Returns a Boolean value indicating whether this skill can be used to handle the given command."""
         verb = (skill_input.verb or None) and skill_input.verb.lower()
+        deps = skill_input.dependencies
         if verb in self._cmd_list:
             return True
         else:
-            return skill_input.dependencies.noun == "email" and \
-                   self._string_is_an_email_address(skill_input.dependencies.x)
+            return deps.noun == "email" and \
+                   self._string_is_an_email_address(deps.x)
     
     def execute_for_command(self, skill_input: SkillInput, services: AssistantServicesBase):
         """Executes this skill on the given command input."""
-        verb_object = skill_input.noun
-        recipient_info = verb_object
+        recipient_info = skill_input.dependencies.x
         if self._string_is_an_email_address(recipient_info):
             email_url = 'mailto:' + recipient_info  # Open default email client
         else:
