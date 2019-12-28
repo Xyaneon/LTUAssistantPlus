@@ -61,7 +61,7 @@ def extractCommand(text):
 
     for k in keywords:
         if k.lower() in text.lower():
-            print(k,keywords[k].__name__)
+            # print(k,keywords[k].__name__)
             return keywords[k]
     print("No valid command found")
     return None
