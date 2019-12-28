@@ -25,21 +25,7 @@ def process_command(services: AssistantServicesBase, optional_message: str = Non
     if not skill_selection.identify_and_run_command(ud, services):
         services.user_interaction_service.tell_user_command_was_not_understood()
 
+from getResult import main
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--text-only-mode',
-                        help='make all user interaction happen in the terminal',
-                        action='store_true')
-    parser.add_argument('-c', '--command-string',
-                        help='user\'s initial command text in string form',
-                        type=str)
-    args = parser.parse_args()
-
-    services = AssistantServices(text_only_mode=args.text_only_mode)
-    init_skills(services)
-
-    if args.command_string:
-        process_command(services, args.command_string)
-    else:
-        process_command(services)
+    main()

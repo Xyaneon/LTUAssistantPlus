@@ -24,8 +24,12 @@ def getConcentration(property,type):
 #multi level search through relationship
 # match(na:bank{id:‘001’})-[re1]->(nb:company)-[re2]->(nc:people) return na,re1,nb,re2,nc
 
+from services.assistant_services import AssistantServices
+
 def main():
-    find_properties('title','Department Chair')
+    text = voiceCommand(5)
+    command = extractCommnad(text)
+    find_properties('title',command)
     getConcentration('Concentration','Master')
 
 main()
