@@ -1,6 +1,6 @@
 # LTUAssistantPlus
 
-[![Build Status](https://travis-ci.com/Xyaneon/LTUAssistantPlus.svg?branch=master)](https://travis-ci.com/Xyaneon/LTUAssistantPlus)
+[![Python](https://github.com/Xyaneon/LTUAssistantPlus/actions/workflows/python.yaml/badge.svg)](https://github.com/Xyaneon/LTUAssistantPlus/actions/workflows/python.yaml)
 
 LTUAssistantPlus is a voice-controlled AI assistant created specifically for use by LTU students.
 
