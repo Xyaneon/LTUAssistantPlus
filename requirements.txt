@@ -3,7 +3,7 @@ neo4j==1.7.6
 notify2==0.3.1; platform_system == "Linux"
 PyAudio==0.2.11
 pypiwin32==223; platform_system == "Windows"
-pywin32==225; platform_system == "Windows"
+pywin32==301; platform_system == "Windows"
 requests==2.25.1
 spacy==2.2.1
 SpeechRecognition==3.8.1
